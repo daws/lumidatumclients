@@ -44,48 +44,88 @@ returns `AuctionResponse`
 `ProductResponse()`
 
 `ProductResponse.getModelId()`
+<br />
+returns `long`
 
 `ProductResponse.setModelId(long modelId)`
+<br />
+returns `void`
 
 `ProductResponse.getOrderId()`
+<br />
+return `long`
 
 `ProductResponse.setOrderId(long orderId)`
+<br />
+returns `void`
 
 `ProductResponse.getCustomerId()`
+<br />
+returns `long`
 
 `ProductResponse.setCustomerId(long customerId)`
+<br />
+returns `void`
 
 `ProductResponse.getCreatedAt()`
+<br />
+returns `java.util.Date`
 
 `ProductResponse.setCreatedAt(java.util.Date createdAt)`
+<br />
+returns `void`
 
 `ProductResponse.getRecommendations()`
+<br />
+returns `java.util.List<com.lumidatum.client.ProductRecommendation>`
 
 `ProductResponse.setRecommendations(java.util.List<com.lumidatum.client.ProductRecommendation> recommendations)`
+<br />
+returns `void`
 
 <br />
 
 `AuctionResponse()`
 
 `AuctionResponse.getModelId()`
+<br />
+returns `long`
 
 `AuctionResponse.setModelId(long modelId)`
+<br />
+returns `void`
 
 `ProductResponse.getPostingId()`
+<br />
+returns `long`
 
 `ProductResponse.setPostingId(long postingId)`
+<br />
+returns `void`
 
 `ProductResponse.getBidderId()`
+<br />
+returns `long`
 
 `ProductResponse.setBidderId(long bidderId)`
+<br />
+returns `void`
 
 `ProductResponse.getCreatedAt()`
+<br />
+returns `java.util.Date`
 
 `ProductResponse.setCreatedAt(java.util.Date createdAt)`
+<br />
+returns `void`
 
 `AuctionResponse.getRecommendations()`
+<br />
+returns `java.util.List<com.lumidatum.client.AuctionRecommendation>`
 
 `AuctionResponse.setRecommendations(java.util.List<com.lumidatum.client.AuctionRecommendation> recommendations)`
+<br />
+returns `void`
 
 
 ####Recomendations:
@@ -112,7 +152,10 @@ returns `AuctionResponse`
 
 `ProductResponse response`
 
-#####Example:
+#####Example with Client:
+```java
+
+```
 
 
 
@@ -128,6 +171,8 @@ returns `AuctionResponse`
 
 `AuctionResponse response`
 
-#####Example:
+#####Example with Client:
+```java
+```
 
 

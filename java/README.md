@@ -2,6 +2,7 @@
 
 ####Client:
 
+#####com.lumidatum.Client
 `Client()`
 
 `Client(String hostAddress, String authenticationToken)`
@@ -10,6 +11,7 @@
 <br />
 throws `IllegalArgumentException` for `modelId` values less than `1`
 
+#####methods
 
 `Client.postPredict(ProductPostParameters parameters)`
 <br />
@@ -30,10 +32,12 @@ returns `AuctionResponse`
 
 ####PostParameters:
 
+#####com.lumidatum.client.ProductPostParameters
 `ProductPostParameters()`
 
 `ProductPostParameters(long customerId, long orderId, List<Long> includedProductIds, List<Long> excludedProductIds, int numberOfRecommendations)`
 
+#####com.lumidatum.client.AuctionPostParameters
 `AuctionPostParameters()`
 
 `AuctionPostParameters(long bidderId, List<Long> includedItemIds, List<Long> excludedItemIds, int numberOfRecommendations)`
@@ -41,7 +45,10 @@ returns `AuctionResponse`
 
 ####Responses:
 
+#####com.lumidatum.client.ProductResponse
 `ProductResponse()`
+
+#####methods
 
 `ProductResponse.getModelId()`
 <br />
@@ -85,7 +92,10 @@ returns `void`
 
 <br />
 
+#####com.lumidatum.client.AuctionResponse
 `AuctionResponse()`
+
+#####methods
 
 `AuctionResponse.getModelId()`
 <br />
@@ -130,9 +140,61 @@ returns `void`
 
 ####Recomendations:
 
+#####com.lumidatum.client.ProductRecommendation
 `ProductRecommendation()`
 
+`ProductRecommendation(long productId)`
+
+`ProductRecommendation(String productDescription)`
+
+`ProductRecommendation(long productId, String productDescription)`
+
+#####methods
+
+`ProductRecommendation.getProductId()`
+<br />
+returns `long`
+
+`ProductRecommendation.setProductId(long productId)`
+<br />
+returns `void`
+
+`ProductRecommendation.getProductDescription()`
+<br />
+returns `String`
+
+`ProductRecommendation.setProductDescription(String productDescription)`
+<br />
+returns `void`
+
+<br />
+
+#####com.lumidatum.client.AuctionRecommendation
 `AuctionRecommendation()`
+
+`AuctionRecommendation(long itemId)`
+
+`AuctionRecommendation(String itemDescription)`
+
+`AuctionRecommendation(long itemId, String itemDescription)`
+
+#####methods
+
+`AuctionRecommendation.getItemId()`
+<br />
+returns `long`
+
+`AuctionRecommendation.setItemId(long itemId)`
+<br />
+returns `void`
+
+`AuctionRecommendation.getItemDescription()`
+<br />
+returns `String`
+
+`AuctionRecommendation.setItemDescription(String itemDescription)`
+<br />
+returns `void`
 
 
 ##API:

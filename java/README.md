@@ -4,6 +4,7 @@
 
 Simply get the compiled jar (lumidatum-client.1.0.0.jar) and add it to your class path.
 You can find the jar in the repository at <a href="https://github.com/Lumidatum/lumidatumclients/tree/master/java/resources">`lumidatumclients/java/resources`</a>.
+[Examples](#examples) below.
 
 ####Client:
 
@@ -219,7 +220,7 @@ returns `void`
 
 `ProductResponse response`
 
-#####Example with Client:
+#####Example with Client:<a name="examples"></a>
 ```java
 // Create an instance of a Client
 String hostAddress = "http://www.lumidatum.com;

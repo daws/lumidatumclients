@@ -31,9 +31,11 @@ returns `AuctionResponse`
 ####PostParameters:
 
 `ProductPostParameters()`
+
 `ProductPostParameters(long customerId, long orderId, List<Long> includedProductIds, List<Long> excludedProductIds, int numberOfRecommendations)`
 
 `AuctionPostParameters()`
+
 `AuctionPostParameters(long bidderId, List<Long> includedItemIds, List<Long> excludedItemIds, int numberOfRecommendations)`
 
 

@@ -8,7 +8,7 @@
 
 `Client(String hostAddress, long modelId, String authenticationToken)`
 <br>
-`throws IllegalArgumentException` for `modelId` values less than `1`
+throws `IllegalArgumentException` for `modelId` values less than `1`
 
 
 `Client.postPredict(ProductPostParameters parameters)`

@@ -20,9 +20,11 @@ returns `ProductResponse`
 returns `ProductResponse`
 
 `Client.postPredict(AuctionPostParameters parameters)`
+<br>
 returns `AuctionResponse`
 
 `Client.postPredict(long modelId, AuctionPostParameters parameters)`
+<br>
 returns `AuctionResponse`
 
 
@@ -58,8 +60,9 @@ returns `AuctionResponse`
 
 #####Parameters:
 
-long modelId (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation.)
-ProductPostParameters parameters
+`long` modelId (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation.)
+
+`ProductPostParameters` parameters
 
 #####Returns:
 
@@ -71,9 +74,11 @@ ProductResponse response
 
 ####Auction recommender:
 
-`long modelId` (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation)
+#####Parameters:
 
-`AuctionPostParameters parameters`
+`long` modelId (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation)
+
+`AuctionPostParameters` parameters
 
 #####Returns:
 

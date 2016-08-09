@@ -1,5 +1,10 @@
 #Lumidatum Java Client Documentation:
 
+###Quick Start:
+
+Simply get the compiled jar (lumidatum-client.1.0.0.jar) and add it to your class path.
+You can find the jar in the repository at `lumidatumclients/java/resources`.
+
 ####Client:
 
 #####com.lumidatum.Client

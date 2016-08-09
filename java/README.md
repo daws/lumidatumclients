@@ -7,24 +7,24 @@
 `Client(String hostAddress, String authenticationToken)`
 
 `Client(String hostAddress, long modelId, String authenticationToken)`
-<br>
+<br />
 throws `IllegalArgumentException` for `modelId` values less than `1`
 
 
 `Client.postPredict(ProductPostParameters parameters)`
-<br>
+<br />
 returns `ProductResponse`
 
 `Client.postPredict(long modelId, ProductPostParameters parameters)`
-<br>
+<br />
 returns `ProductResponse`
 
 `Client.postPredict(AuctionPostParameters parameters)`
-<br>
+<br />
 returns `AuctionResponse`
 
 `Client.postPredict(long modelId, AuctionPostParameters parameters)`
-<br>
+<br />
 returns `AuctionResponse`
 
 
@@ -43,7 +43,49 @@ returns `AuctionResponse`
 
 `ProductResponse()`
 
+`ProductResponse.getModelId()`
+
+`ProductResponse.setModelId(long modelId)`
+
+`ProductResponse.getOrderId()`
+
+`ProductResponse.setOrderId(long orderId)`
+
+`ProductResponse.getCustomerId()`
+
+`ProductResponse.setCustomerId(long customerId)`
+
+`ProductResponse.getCreatedAt()`
+
+`ProductResponse.setCreatedAt(java.util.Date createdAt)`
+
+`ProductResponse.getRecommendations()`
+
+`ProductResponse.setRecommendations(java.util.List<com.lumidatum.client.ProductRecommendation> recommendations)`
+
+<br />
+
 `AuctionResponse()`
+
+`AuctionResponse.getModelId()`
+
+`AuctionResponse.setModelId(long modelId)`
+
+`ProductResponse.getPostingId()`
+
+`ProductResponse.setPostingId(long postingId)`
+
+`ProductResponse.getBidderId()`
+
+`ProductResponse.setBidderId(long bidderId)`
+
+`ProductResponse.getCreatedAt()`
+
+`ProductResponse.setCreatedAt(java.util.Date createdAt)`
+
+`AuctionResponse.getRecommendations()`
+
+`AuctionResponse.setRecommendations(java.util.List<com.lumidatum.client.AuctionRecommendation> recommendations)`
 
 
 ####Recomendations:

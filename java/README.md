@@ -62,13 +62,13 @@ returns `AuctionResponse`
 
 #####Parameters:
 
-`long` modelId (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation.)
+`long modelId` (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation.)
 
-`ProductPostParameters` parameters
+`ProductPostParameters parameters`
 
 #####Returns:
 
-ProductResponse response
+`ProductResponse response`
 
 #####Example:
 
@@ -78,13 +78,13 @@ ProductResponse response
 
 #####Parameters:
 
-`long` modelId (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation)
+`long modelId` (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation)
 
-`AuctionPostParameters` parameters
+`AuctionPostParameters parameters`
 
 #####Returns:
 
-AuctionResponse response
+`AuctionResponse response`
 
 #####Example:
 

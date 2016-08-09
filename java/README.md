@@ -216,7 +216,42 @@ returns `void`
 
 #####Example with Client:
 ```java
+// Create an instance of a Client
+String hostAddress = "http://www.lumidatum.com;
+long modelId = 123;
+String authenticationToken = "Token 6daf37b9612850d0d58b293825dcbd71f68b0062";
 
+Client lumidatumClient = new Client(hostAddress, modelId, authenticationToken);
+
+// Input relevant parameters.
+long customerId = 22;
+long orderId = 541;
+
+List<Long> includeProductIds = new ArrayList<Long>();
+includeProductIds.add(Long.valueOf(1));
+includeProductIds.add(Long.valueOf(2));
+includeProductIds.add(Long.valueOf(3));
+
+List<Long> excludeProductIds = new ArrayList<Long>();
+excludeProductIds.add(Long.valueOf(4));
+excludeProductIds.add(Long.valueOf(5));
+
+int numberOfRecommendations = 3;
+
+ProductPostParameters parameters = new ProductPostParamters(
+    customerId,
+    orderId,
+    includeProductIds,
+    excludeProductIds,
+    numberOfRecommendations
+);
+
+// Call the REST API using the client.
+ProductResponse response = client.postPredict(parameters);
+
+// Use the results.
+Date recommendationCreationTime = response.getCreatedAt();
+List<ProductRecommendation> recommendations = response.getRecommendations();
 ```
 
 
@@ -235,6 +270,42 @@ returns `void`
 
 #####Example with Client:
 ```java
+// Create an instance of a Client
+String hostAddress = "http://www.lumidatum.com;
+long modelId = 123;
+String authenticationToken = "Token 6daf37b9612850d0d58b293825dcbd71f68b0062";
+
+Client lumidatumClient = new Client(hostAddress, modelId, authenticationToken);
+
+// Input relevant parameters.
+long bidderId = 12;
+long postingId = 332;
+
+List<Long> includeItemIds = new ArrayList<Long>();
+includeItemIds.add(Long.valueOf(1));
+includeItemIds.add(Long.valueOf(2));
+includeItemIds.add(Long.valueOf(3));
+
+List<Long> excludeItemIds = new ArrayList<Long>();
+excludeItemIds.add(Long.valueOf(4));
+excludeItemIds.add(Long.valueOf(5));
+
+int numberOfRecommendations = 3;
+
+AuctionPostParamters parameters = new AuctionPostParamters(
+    bidderId,
+    postingId,
+    includeItemIds,
+    excludeItemIds,
+    numberOfRecommendations
+);
+
+// Call the REST API using the client.
+AuctionResponse response = client.postPredict(parameters);
+
+// Use the results.
+Date recommendationCreationTime = response.getCreatedAt();
+List<AuctionRecommendation> recommendations = response.getRecommendations();
 ```
 
 

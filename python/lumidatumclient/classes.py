@@ -17,3 +17,11 @@ class LumidatumClient(object):
         )
 
         return response.json()
+
+    def describeRecommendations(self, parameters, model_id=None):
+
+        # Add in additional parameter to switch for "human readable" version
+        # of the result instead
+        parameters['human_readable'] = True
+
+        return self.getRecommendations(self, parameters, model_id)

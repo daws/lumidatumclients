@@ -18,9 +18,15 @@ class LumidatumClient(object):
         if selected_model_id is None:
             raise ValueError('model_id must be specified either at initialization of LumidatumClient or in client method call.')
 
+        headers = {
+            'Authoriation': self.authentication_token,
+            'content-type': 'application/json',
+        }
+
         response = requests.post(
             os.path.join(self.host_address, 'api/predict', selected_model_id),
-            parameters
+            parameters,
+            headers=headers
         )
 
         return response.json()

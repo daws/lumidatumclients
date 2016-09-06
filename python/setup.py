@@ -4,7 +4,7 @@ import distutils.core
 distutils.core.setup(
     name='lumidatumclient',
     packages=['lumidatumclient'],
-    version='0.1.0',
+    version='0.1.1',
     description='A client for the Lumidatum REST API.',
     author='Mat Lee',
     author_email='matt@lumidatum.com',

@@ -31,7 +31,7 @@ class LumidatumClient(object):
 
         return response.json()
 
-    def describeRecommendations(self, parameters, model_id=None):
+    def getRecommendationDescriptions(self, parameters, model_id=None):
         """
         Get human readable recommendations.
         """

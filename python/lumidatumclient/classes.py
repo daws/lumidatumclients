@@ -1,3 +1,5 @@
+import os
+
 import requests
 
 
@@ -19,7 +21,7 @@ class LumidatumClient(object):
             raise ValueError('model_id must be specified either at initialization of LumidatumClient or in client method call.')
 
         headers = {
-            'Authoriation': self.authentication_token,
+            'Authorization': self.authentication_token,
             'content-type': 'application/json',
         }
 

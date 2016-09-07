@@ -1,3 +1,4 @@
+import json
 import os
 
 import requests
@@ -27,7 +28,7 @@ class LumidatumClient(object):
 
         response = requests.post(
             os.path.join(self.host_address, 'api/predict', selected_model_id),
-            parameters,
+            json.dumps(parameters),
             headers=headers
         )
 

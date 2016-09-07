@@ -7,7 +7,7 @@ class LumidatumClient(object):
 
     def __init__(self, authentication_token, model_id=None, host_address='https://www.lumidatum.com'):
         self.authentication_token = authentication_token
-        self.model_id = model_id
+        self.model_id = str(model_id)
         self.host_address = host_address
 
     def getRecommendations(self, parameters, model_id=None):
@@ -16,7 +16,7 @@ class LumidatumClient(object):
 
         Returns a list of id/score pairs in descending order from the highest score.
         """
-        selected_model_id = model_if if model_id else self.model_id
+        selected_model_id = str(model_if) if model_id else self.model_id
         if selected_model_id is None:
             raise ValueError('model_id must be specified either at initialization of LumidatumClient or in client method call.')
 

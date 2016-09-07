@@ -40,4 +40,4 @@ class LumidatumClient(object):
         """
         parameters['human_readable'] = True
 
-        return self.getRecommendations(self, parameters, model_id)
+        return self.getRecommendations(parameters, model_id)

@@ -7,6 +7,9 @@ To get the client in Python simply run:
 `pip install lumidatumclient`
 
 [Examples](#examples) below.
+
+<i>Latest version: 0.2.0</i>
+
 <i>*Currently only Python 2.6 - 2.7 is supported.</i>
 
 ####Client:

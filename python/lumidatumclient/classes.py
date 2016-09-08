@@ -11,12 +11,11 @@ class LumidatumClient(object):
         self.model_id = str(model_id)
         self.host_address = host_address
 
-    def getRecommendations(self, parameters, model_id=None):
+    def api(self, http_method='POST', parameters={}, model_id=None, api_function='predict'):
         """
-        Get recommendations for a model specified by model_id.
+        General method for the Lumidatum REST API.
+        """
 
-        Returns a list of id/score pairs in descending order from the highest score.
-        """
         selected_model_id = str(model_id) if model_id else self.model_id
         if selected_model_id is None:
             raise ValueError('model_id must be specified either at initialization of LumidatumClient or in client method call.')
@@ -26,13 +25,32 @@ class LumidatumClient(object):
             'content-type': 'application/json',
         }
 
-        response = requests.post(
-            os.path.join(self.host_address, 'api/predict', selected_model_id),
-            json.dumps(parameters),
-            headers=headers
-        )
+        api_endpoint = os.path.join(self.host_address, 'api/{}'.format(api_function), selected_model_id)
+
+        if http_method == 'POST':
+            response = requests.post(
+                api_endpoint,
+                json.dumps(parameters),
+                headers=headers
+            )
+        elif http_method == 'GET':
+            response = requests.get(
+                api_endpoint,
+                headers=headers
+            )
+        else:
+            raise ValueError('HTTP method "{}" not allowed'.format(http_method))
 
         return response.json()
+
+    def getRecommendations(self, parameters, model_id=None):
+        """
+        Get recommendations for a model specified by model_id.
+
+        Returns a list of id/score pairs in descending order from the highest score.
+        """
+
+        return self.api(http_method='POST', parameters=parameters, model_id=model_id)
 
     def getRecommendationDescriptions(self, parameters, model_id=None):
         """
@@ -40,4 +58,4 @@ class LumidatumClient(object):
         """
         parameters['human_readable'] = True
 
-        return self.getRecommendations(parameters, model_id)
+        return self.api(http_method='POST', parameters=parameters, model_id=model_id)

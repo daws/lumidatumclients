@@ -26,7 +26,7 @@ If `model_id` is provided both at client instantiation and in a method call, the
 #####Example with Client:<a name="examples"></a>
 
 ```
-from lumidatumclient import LumidataumClient
+from lumidatumclient import LumidatumClient
 
 auth_token = '<your auth token>'
 model_id = <your model id>

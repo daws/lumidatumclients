@@ -1,1 +1,1 @@
-from classes import LumidatumClient
+from lumidatumclient.classes import LumidatumClient

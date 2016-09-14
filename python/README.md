@@ -22,7 +22,7 @@ To get the client in Python simply run:
 
 `lumidatumclient.LumidatumClient.getRecommendations(parameters, model_id=None)`
 
-Input parameters is a single dictionary. The keys and value types vary by model implementation.
+Input parameters is a single dictionary. The key names and value types vary by model implementation.
 If `model_id` is provided both at client instantiation and in a method call, the value provided at the method call is used to call the API.
 
 

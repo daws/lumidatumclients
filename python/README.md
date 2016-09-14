@@ -15,13 +15,17 @@ To get the client in Python simply run:
 ####Client:
 
 `lumidatumclient.LumidatumClient(auth_token, model_id=None, host_address='https://www.lumidatum.com')`
+
 <br />
+
 `model_id` may be a string or int, and if not provided at client instantiation, must be provided in all method calls.
 
 #####Methods:
 
 `lumidatumclient.LumidatumClient.getRecommendations(parameters, model_id=None)`
+
 <br />
+
 Input parameters is a single dictionary. The keys and value types vary by model implementation.
 If `model_id` is provided both at client instantiation and in a method call, the value provided at the method call is used to call the API.
 

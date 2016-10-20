@@ -15,5 +15,6 @@ distutils.core.setup(
     classifiers=[],
     install_requires=[
         'requests',
+        'requests_toolbelt',
     ]
 )

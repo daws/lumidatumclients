@@ -1,11 +1,10 @@
-import distutils.core
+import setuptools
 
-from lumidatumclient import version
 
-distutils.core.setup(
+setuptools.setup(
     name='lumidatumclient',
     packages=['lumidatumclient'],
-    version=version,
+    version='0.4.7',
     description='A client for the Lumidatum REST API.',
     author='Mat Lee',
     author_email='matt@lumidatum.com',
@@ -15,6 +14,6 @@ distutils.core.setup(
     classifiers=[],
     install_requires=[
         'requests',
-        'requests_toolbelt',
+        'requests-toolbelt',
     ]
 )

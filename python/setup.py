@@ -1,7 +1,7 @@
-import setuptools
+import distutils.core
 
 
-setuptools.setup(
+distutils.core.setup(
     name='lumidatumclient',
     packages=['lumidatumclient'],
     version='0.4.7',

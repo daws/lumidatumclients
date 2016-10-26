@@ -76,9 +76,9 @@ class LumidatumClient(object):
 
         return self.dataUpdateApi(model_id, 'items', data_string, file_path)
 
-    def sendTransactionData(self, file_path, model_id=None):
+    def sendTransactionData(self, data_string=None, file_path=None, model_id=None):
 
-        return self.dataUpdateApi(model_id, 'transactions', None, file_path)
+        return self.dataUpdateApi(model_id, 'transactions', None, data_string, file_path)
 
     def dataUpdateApi(self, model_id, data_type, data_string, file_path):
         selected_model_id = str(model_id) if model_id else self.model_id

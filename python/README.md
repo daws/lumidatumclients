@@ -6,7 +6,7 @@ To get the client in Python simply run:
 
 `pip install lumidatumclient`
 
-<i>Latest version: 0.4.8</i>
+<i>Latest version: 0.4.9</i>
 
 <i>*Currently Python versions 2.6, 2.7, 3.4, 3.5 are supported.</i>
 
@@ -89,7 +89,7 @@ user_data_update_response = client.sendUserData(user_data_string)
 
 ######Uploading a file of transaction data
 ```
-file_path = '<my local file path>'
+my_local_file_path = '<my local file path>'
 
-file_upload_response = client.sendTransactionData(file_path)
+file_upload_response = client.sendTransactionData(file_path=my_local_file_path)
 ```

@@ -6,7 +6,7 @@ To get the client in Python simply run:
 
 `pip install lumidatumclient`
 
-<i>Latest version: 0.4.7</i>
+<i>Latest version: 0.4.8</i>
 
 <i>*Currently Python versions 2.6, 2.7, 3.4, 3.5 are supported.</i>
 
@@ -59,7 +59,7 @@ Alternatively, the local path to a file to be uploaded can be provided, where th
 
 Writes/updates item profile data.
 
-`lumidatumclient.LumidatumClient.sendTransactionData(file_path=None, model_id=None)`
+`lumidatumclient.LumidatumClient.sendTransactionData(data_string=None, file_path=None, model_id=None)`
 
 Writes/updates transaction data.
 

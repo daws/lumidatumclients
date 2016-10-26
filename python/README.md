@@ -87,8 +87,16 @@ user_data_string = '{"id": 123 ... "field": "values, text, whatever's fine"}\n{"
 user_data_update_response = client.sendUserData(user_data_string)
 ```
 
-######Uploading a file of transaction data
+######Updating transaction data
 ```
+# Sending data in a request body
+transaction_data_string = '...'
+
+transaction_data_update_response = client.sendTransactionData(transaction_data_string)
+```
+
+```
+# Uploading a file
 my_local_file_path = '<my local file path>'
 
 file_upload_response = client.sendTransactionData(file_path=my_local_file_path)

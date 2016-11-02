@@ -44,10 +44,8 @@ class LumidatumClient(object):
             raise ValueError('HTTP method "{}" not allowed'.format(http_method))
 
         try:
-
             return response.json()
         except:
-
             return {'error': response.text}
 
     def getRecommendations(self, parameters, model_id=None):
@@ -63,6 +61,7 @@ class LumidatumClient(object):
         """
         Get human readable recommendations.
         """
+        parameters = dict(parameters)
         parameters['human_readable'] = True
 
         return self.api(http_method='POST', parameters=parameters, model_id=model_id)

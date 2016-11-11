@@ -82,7 +82,7 @@ recs = client.getRecommendations(params)
 
 ######Updating user data
 ```
-user_data_string = '{"id": 123 ... "field": "values, text, whatever's fine"}\n{"id": 345, ... "field": "values \\n with new lines"}'
+user_data_string = '{"id": 123 ... "field": "values, text, whatever\'s fine"}\n{"id": 345, ... "field": "values \\n with new lines"}'
 
 user_data_update_response = client.sendUserData(user_data_string)
 ```

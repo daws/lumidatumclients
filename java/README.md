@@ -2,7 +2,7 @@
 
 ###Quick Start:
 
-Simply get the compiled jar (lumidatum-client.1.0.0.jar) and add it to your class path.
+Simply get the compiled jar (lumidatum-client.1.1.0.jar) and add it to your class path.
 You can find the jar in the repository at <a href="https://github.com/Lumidatum/lumidatumclients/tree/master/java/resources">`lumidatumclients/java/resources`</a>.
 [Examples](#examples) below.
 
@@ -34,6 +34,30 @@ returns `AuctionResponse`
 `Client.postPredict(long modelId, AuctionPostParameters parameters)`
 <br />
 returns `AuctionResponse`
+
+`Client.sendUserProfilesFile(String inputFilePath)`
+<br />
+returns `SendFileResponse`
+
+`Client.sendUserProfilesFile(File inputFile)`
+<br />
+returns `SendFileResponse`
+
+`Client.sendItemProfilesFile(String inputFilePath)`
+<br />
+returns `SendFileResponse`
+
+`Client.sendItemProfilesFile(File inputFile)`
+<br />
+returns `SendFileResponse`
+
+`Client.sendTransactionsFile(String inputFilePath)`
+<br />
+returns `SendFileResponse`
+
+`Client.sendTransactionsFile(File inputFile)`
+<br />
+returns `SendFileResponse`
 
 
 ####PostParameters:
@@ -142,6 +166,9 @@ returns `java.util.List<com.lumidatum.client.AuctionRecommendation>`
 `AuctionResponse.setRecommendations(java.util.List<com.lumidatum.client.AuctionRecommendation> recommendations)`
 <br />
 returns `void`
+
+#####com.lumidatum.client.SendFileResponse
+`SendFileResponse()`
 
 
 ####Recomendations:
@@ -314,4 +341,26 @@ Date recommendationCreationTime = response.getCreatedAt();
 List<AuctionRecommendation> recommendations = response.getRecommendations();
 ```
 
+####Sending Data
 
+#####Parameters:
+`String inputFilePath` A string representing the path to a local file you'd like to upload.
+
+or
+
+`File inputFile` An instance of a File object with data you would like to upload.
+
+##### Returns:
+
+`SendFileResponse response`
+
+#####Example with Client:
+```
+// Send additional data.
+String pathToMyUserDataFile = "/my/user/data/file.txt";
+client.sendUserProfilesFile(pathToMyUserDataFile);
+
+// You can also directly pass in a File object.
+File myUserDataFile = new File("/my/user/data/file.txt");
+client.sendUserProfilesFile(myUserDataFile);
+```

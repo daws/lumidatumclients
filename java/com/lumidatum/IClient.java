@@ -20,10 +20,10 @@ public interface IClient {
     public AuctionResponse postPredict(AuctionPostParameters parameters) throws IOException, JsonProcessingException;
     public AuctionResponse postPredict(long modelId, AuctionPostParameters parameters) throws IOException, JsonProcessingException;
 
-    // public SendFileResponse sendUserProfiles(String inputFilePath) throws IOException, JsonProcessingException;
-    // public SendFileResponse sendUserProfiles(File inputFile) throws IOException, JsonProcessingException;
-    // public SendFileResponse sendItemProfiles(String intpuFilePath) throws IOException, JsonProcessingException;
-    // public SendFileResponse sendItemProfiles(File inputFile) throws IOException, JsonProcessingException;
+    public SendFileResponse sendUserProfilesFile(String inputFilePath) throws IOException, JsonProcessingException;
+    public SendFileResponse sendUserProfilesFile(File inputFile) throws IOException, JsonProcessingException;
+    public SendFileResponse sendItemProfilesFile(String intpuFilePath) throws IOException, JsonProcessingException;
+    public SendFileResponse sendItemProfilesFile(File inputFile) throws IOException, JsonProcessingException;
     public SendFileResponse sendTransactionsFile(String inputFilePath) throws IOException, JsonProcessingException;
     public SendFileResponse sendTransactionsFile(File inputFile) throws IOException, JsonProcessingException;
 }

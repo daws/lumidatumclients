@@ -183,7 +183,7 @@ public class Client implements IClient {
 
         SendFileResponse sendFileResponse;
 
-        if (uploadUrl.toString().startsWith("https://lumidatum-app-data")) {
+        if (uploadUrl.toString().contains("app-data.s3.amazonaws.com")) {
             sendFileResponse = this._sendFileToS3(preSendFileResponse, inputFile);
         } else {
             sendFileResponse = this._sendFileToWebServer(preSendFileResponse, inputFile);
@@ -201,6 +201,8 @@ public class Client implements IClient {
 
     private SendFileResponse _sendFileToS3(PreSendFileResponse preSendFileResponse, File inputFile) throws IOException {
         URL uploadUrl = preSendFileResponse.getUploadUrl();
+
+        // TODO: implement this...
 
         return new SendFileResponse();
     }

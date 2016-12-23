@@ -369,7 +369,8 @@ or
 #####Example with Client:
 ```
 // Send additional data.
-String myUserDataString = "{\"user_id\": 1, \"some_field\": \"some value\"}\n{\"user_id\": 2, \"some_field\": \"some other value\"}"
+String myUserDataString = "{\"user_id\": 1, \"some_field\": \"some value\"}\n{\"user_id\": 2, \"some_field\": \"some other value\"}";
+client.sendUserProfilesString(myUserDataString);
 
 // Send a data file
 String pathToMyUserDataFile = "/my/user/data/file.txt";

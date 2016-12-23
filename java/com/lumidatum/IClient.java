@@ -10,7 +10,7 @@ import com.lumidatum.client.AuctionPostParameters;
 import com.lumidatum.client.AuctionResponse;
 import com.lumidatum.client.ProductPostParameters;
 import com.lumidatum.client.ProductResponse;
-import com.lumidatum.client.SendFileResponse;
+import com.lumidatum.client.SendDataResponse;
 
 
 public interface IClient {

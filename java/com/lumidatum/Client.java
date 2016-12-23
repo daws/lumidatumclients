@@ -83,8 +83,10 @@ public class Client implements IClient {
     }
 
     public SendDataResponse sendUserProfilesString(String inputString) throws IOException, JsonProcessingException {
+        String rawResponseBodyString = this._sendPostRequest("%s/api/data?model_id=%d&data_type=users", inputString);
+        SendDataResponse sendDataResponse = this.<SendDataResponse>_deserializeResponse(rawResponseBodyString, SendDataResponse.class);
 
-        return new SendDataResponse();
+        return sendDataResponse;
     }
 
     public SendDataResponse sendUserProfilesFile(String inputFilePath) throws IOException, JsonProcessingException {
@@ -99,8 +101,10 @@ public class Client implements IClient {
     }
 
     public SendDataResponse sendItemProfilesString(String inputString) throws IOException, JsonProcessingException {
+        String rawResponseBodyString = this._sendPostRequest("%s/api/data?model_id=%d&data_type=items", inputString);
+        SendDataResponse sendDataResponse = this.<SendDataResponse>_deserializeResponse(rawResponseBodyString, SendDataResponse.class);
 
-        return new SendDataResponse();
+        return sendDataResponse;
     }
 
     public SendDataResponse sendItemProfilesFile(String inputFilePath) throws IOException, JsonProcessingException {
@@ -115,6 +119,8 @@ public class Client implements IClient {
     }
 
     public SendDataResponse sendTransactionsString(String inputString) throws IOException, JsonProcessingException {
+        String rawResponseBodyString = this._sendPostRequest("%s/api/data?model_id=%d&data_type=transactions", inputString);
+        SendDataResponse sendDataResponse = this.<SendDataResponse>_deserializeResponse(rawResponseBodyString, SendDataResponse.class);
 
         return new SendDataResponse();
     }
@@ -148,10 +154,15 @@ public class Client implements IClient {
             throw e;
         }
 
-        String rawResponseBodyString = _sendPostRequest("%s/api/predict/%d", modelId, payload);
+        String rawResponseBodyString = this._sendPostRequest("%s/api/predict/%d", payload);
         ResponseType deserializedResponse = this.<ResponseType>_deserializeResponse(rawResponseBodyString, responseTypeClass);
 
         return deserializedResponse;
+    }
+
+    private String _sendPostRequest(String urlPattern, String payload) {
+
+        return this._sendPostRequest(urlPattern, this.modelId, payload);
     }
 
     private String _sendPostRequest(String urlPattern, long modelId, String payload) {
@@ -189,22 +200,22 @@ public class Client implements IClient {
         return responseContent;
     }
 
-    private SendFileResponse _sendFileRequest(File inputFile, String dataType) throws IOException {
+    private SendDataResponse _sendFileRequest(File inputFile, String dataType) throws IOException {
         // Check this gets just the name, not the String representation of the full path...
         PreSendFileResponse preSendFileResponse = this._preSendFileRequest(inputFile, dataType);
         URL uploadUrl = preSendFileResponse.getUploadUrl();
 
         System.out.println(preSendFileResponse.getUploadUrl());
 
-        SendFileResponse sendFileResponse;
+        SendDataResponse sendDataResponse;
 
         if (uploadUrl.toString().contains("app-data.s3.amazonaws.com")) {
-            sendFileResponse = this._sendFileToS3(preSendFileResponse, inputFile);
+            sendDataResponse = this._sendFileToS3(preSendFileResponse, inputFile);
         } else {
-            sendFileResponse = this._sendFileToWebServer(preSendFileResponse, inputFile);
+            sendDataResponse = this._sendFileToWebServer(preSendFileResponse, inputFile);
         }
 
-        return sendFileResponse;
+        return sendDataResponse;
     }
 
     private PreSendFileResponse _preSendFileRequest(File inputFile, String dataType) throws IOException {
@@ -214,17 +225,17 @@ public class Client implements IClient {
         return this.<PreSendFileResponse>_deserializeResponse(rawPreSendFileResponseString, PreSendFileResponse.class);
     }
 
-    private SendFileResponse _sendFileToS3(PreSendFileResponse preSendFileResponse, File inputFile) throws IOException {
+    private SendDataResponse _sendFileToS3(PreSendFileResponse preSendFileResponse, File inputFile) throws IOException {
         URL uploadUrl = preSendFileResponse.getUploadUrl();
 
         // TODO: implement this...
 
-        return new SendFileResponse();
+        return new SendDataResponse();
     }
 
     // Code modified from example at:
     // https://ashwinrayaprolu.wordpress.com/2010/11/16/upload-file-to-server-from-java-client-without-any-library/
-    private SendFileResponse _sendFileToWebServer(PreSendFileResponse preSendFileResponse, File inputFile) throws IOException {
+    private SendDataResponse _sendFileToWebServer(PreSendFileResponse preSendFileResponse, File inputFile) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(inputFile);
 
         URL url = preSendFileResponse.getUploadUrl();
@@ -287,9 +298,9 @@ public class Client implements IClient {
         bufferedReader.close(); 
         connection.disconnect();
 
-        SendFileResponse sendFileResponse = this.<SendFileResponse>_deserializeResponse(jsonData.toString(), SendFileResponse.class);
+        SendDataResponse sendDataResponse = this.<SendDataResponse>_deserializeResponse(jsonData.toString(), SendDataResponse.class);
 
-        return sendFileResponse;
+        return sendDataResponse;
     }
 
     private <ResponseType> ResponseType _deserializeResponse(String rawResponseBodyString, Class responseTypeClass) throws IOException, JsonProcessingException {

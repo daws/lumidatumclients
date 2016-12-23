@@ -35,29 +35,41 @@ returns `AuctionResponse`
 <br />
 returns `AuctionResponse`
 
+`Client.sendUserProfilesString(String inputString)`
+<br />
+returns `SendDataResponse`
+
 `Client.sendUserProfilesFile(String inputFilePath)`
 <br />
-returns `SendFileResponse`
+returns `SendDataResponse`
 
 `Client.sendUserProfilesFile(File inputFile)`
 <br />
-returns `SendFileResponse`
+returns `SendDataResponse`
+
+`Client.sendItemProfilesString(String inputString)`
+<br />
+returns `SendDataResponse`
 
 `Client.sendItemProfilesFile(String inputFilePath)`
 <br />
-returns `SendFileResponse`
+returns `SendDataResponse`
 
 `Client.sendItemProfilesFile(File inputFile)`
 <br />
-returns `SendFileResponse`
+returns `SendDataResponse`
+
+`Client.sendTransactionsString(String inputString)`
+<br />
+returns `SendDataResponse`
 
 `Client.sendTransactionsFile(String inputFilePath)`
 <br />
-returns `SendFileResponse`
+returns `SendDataResponse`
 
 `Client.sendTransactionsFile(File inputFile)`
 <br />
-returns `SendFileResponse`
+returns `SendDataResponse`
 
 
 ####PostParameters:
@@ -167,8 +179,8 @@ returns `java.util.List<com.lumidatum.client.AuctionRecommendation>`
 <br />
 returns `void`
 
-#####com.lumidatum.client.SendFileResponse
-`SendFileResponse()`
+#####com.lumidatum.client.SendDataResponse
+`SendDataResponse()`
 
 
 ####Recomendations:
@@ -352,7 +364,7 @@ or
 
 ##### Returns:
 
-`SendFileResponse response`
+`SendDataResponse response`
 
 #####Example with Client:
 ```

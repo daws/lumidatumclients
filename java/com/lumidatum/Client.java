@@ -26,7 +26,7 @@ import com.lumidatum.client.AuctionResponse;
 import com.lumidatum.client.ProductPostParameters;
 import com.lumidatum.client.ProductResponse;
 import com.lumidatum.client.PreSendFileResponse;
-import com.lumidatum.client.SendFileResponse;
+import com.lumidatum.client.SendDataResponse;
 
 
 public class Client implements IClient {
@@ -82,35 +82,35 @@ public class Client implements IClient {
         return this.<AuctionResponse>_postPredict(modelId, parameters, AuctionResponse.class);
     }
 
-    public SendFileResponse sendUserProfilesFile(String inputFilePath) throws IOException, JsonProcessingException {
+    public SendDataResponse sendUserProfilesFile(String inputFilePath) throws IOException, JsonProcessingException {
         File inputFile = new File(inputFilePath);
 
         return this.sendUserProfilesFile(inputFile);
     }
 
-    public SendFileResponse sendUserProfilesFile(File inputFile) throws IOException, JsonProcessingException {
+    public SendDataResponse sendUserProfilesFile(File inputFile) throws IOException, JsonProcessingException {
 
         return this._sendFileRequest(inputFile, "transactions");
     }
 
-    public SendFileResponse sendItemProfilesFile(String inputFilePath) throws IOException, JsonProcessingException {
+    public SendDataResponse sendItemProfilesFile(String inputFilePath) throws IOException, JsonProcessingException {
         File inputFile = new File(inputFilePath);
 
         return this.sendItemProfilesFile(inputFile);
     }
 
-    public SendFileResponse sendItemProfilesFile(File inputFile) throws IOException, JsonProcessingException {
+    public SendDataResponse sendItemProfilesFile(File inputFile) throws IOException, JsonProcessingException {
 
         return this._sendFileRequest(inputFile, "transactions");
     }
 
-    public SendFileResponse sendTransactionsFile(String inputFilePath) throws IOException, JsonProcessingException {
+    public SendDataResponse sendTransactionsFile(String inputFilePath) throws IOException, JsonProcessingException {
         File inputFile = new File(inputFilePath);
 
         return this.sendTransactionsFile(inputFile);
     }
 
-    public SendFileResponse sendTransactionsFile(File inputFile) throws IOException, JsonProcessingException {
+    public SendDataResponse sendTransactionsFile(File inputFile) throws IOException, JsonProcessingException {
 
         return this._sendFileRequest(inputFile, "transactions");
     }

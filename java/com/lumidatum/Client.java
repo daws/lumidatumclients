@@ -82,6 +82,11 @@ public class Client implements IClient {
         return this.<AuctionResponse>_postPredict(modelId, parameters, AuctionResponse.class);
     }
 
+    public SendDataResponse sendUserProfilesString(String inputString) throws IOException, JsonProcessingException {
+
+        return new SendDataResponse();
+    }
+
     public SendDataResponse sendUserProfilesFile(String inputFilePath) throws IOException, JsonProcessingException {
         File inputFile = new File(inputFilePath);
 
@@ -93,6 +98,11 @@ public class Client implements IClient {
         return this._sendFileRequest(inputFile, "transactions");
     }
 
+    public SendDataResponse sendItemProfilesString(String inputString) throws IOException, JsonProcessingException {
+
+        return new SendDataResponse();
+    }
+
     public SendDataResponse sendItemProfilesFile(String inputFilePath) throws IOException, JsonProcessingException {
         File inputFile = new File(inputFilePath);
 
@@ -102,6 +112,11 @@ public class Client implements IClient {
     public SendDataResponse sendItemProfilesFile(File inputFile) throws IOException, JsonProcessingException {
 
         return this._sendFileRequest(inputFile, "transactions");
+    }
+
+    public SendDataResponse sendTransactionsString(String inputString) throws IOException, JsonProcessingException {
+
+        return new SendDataResponse();
     }
 
     public SendDataResponse sendTransactionsFile(String inputFilePath) throws IOException, JsonProcessingException {

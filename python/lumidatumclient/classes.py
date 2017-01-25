@@ -13,9 +13,11 @@ class LumidatumClient(object):
         self.model_id = str(model_id)
         self.host_address = host_address
 
-    def api(self, http_method='POST', parameters={}, model_id=None, api_function='predict'):
+    def api(self, http_method='POST', parameters={}, model_id=None, api_function='predict', deserialize_response=True):
         """
         General method for the Lumidatum REST API.
+
+        If deserialize_response is set to False, a requests.HttpResponse object will be returned.
         """
 
         selected_model_id = str(model_id) if model_id else self.model_id
@@ -43,29 +45,33 @@ class LumidatumClient(object):
         else:
             raise ValueError('HTTP method "{}" not allowed'.format(http_method))
 
-        try:
+        if deserialize_response:
+            try:
 
-            return response.json()
-        except:
+                return response.json()
+            except:
 
-            return {'error': response.text}
+                return {'error': response.text}
+        else:
 
-    def getRecommendations(self, parameters, model_id=None):
+            return response
+
+    def getRecommendations(self, parameters, model_id=None, deserialize_response=True):
         """
         Get recommendations for a model specified by model_id.
 
         Returns a list of id/score pairs in descending order from the highest score.
         """
 
-        return self.api(http_method='POST', parameters=parameters, model_id=model_id)
+        return self.api(http_method='POST', parameters=parameters, model_id=model_id, api_function='predict', deserialize_response=deserialize_response)
 
-    def getRecommendationDescriptions(self, parameters, model_id=None):
+    def getRecommendationDescriptions(self, parameters, model_id=None, deserialize_response=True):
         """
         Get human readable recommendations.
         """
         parameters['human_readable'] = True
 
-        return self.api(http_method='POST', parameters=parameters, model_id=model_id)
+        return self.api(http_method='POST', parameters=parameters, model_id=model_id, api_function='predict', deserialize_response=deserialize_response)
 
     # Data string takes priority, in the case of data_string and file_path params both being provided
     def sendUserData(self, data_string=None, file_path=None, model_id=None):
@@ -82,6 +88,7 @@ class LumidatumClient(object):
 
     def dataUpdateApi(self, model_id, data_type, data_string, file_path):
         selected_model_id = str(model_id) if model_id else self.model_id
+
         if selected_model_id is None:
             raise ValueError('model_id must be specified either at initialization of LumidatumClient or in client method call.')
 

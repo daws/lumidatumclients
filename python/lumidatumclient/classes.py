@@ -13,6 +13,25 @@ class LumidatumClient(object):
         self.model_id = str(model_id)
         self.host_address = host_address
 
+
+    def getRecommendations(self, parameters, model_id=None, deserialize_response=True):
+        """
+        Get recommendations for a model specified by model_id.
+
+        Returns a list of id/score pairs in descending order from the highest score.
+        """
+
+        return self.api(http_method='POST', parameters=parameters, model_id=model_id, api_function='predict', deserialize_response=deserialize_response)
+
+    def getRecommendationDescriptions(self, parameters, model_id=None, deserialize_response=True):
+        """
+        Get human readable recommendations.
+        """
+        parameters = dict(parameters)
+        parameters['human_readable'] = True
+
+        return self.api(http_method='POST', parameters=parameters, model_id=model_id, api_function='predict', deserialize_response=deserialize_response)
+
     def api(self, http_method='POST', parameters={}, model_id=None, api_function='predict', deserialize_response=True):
         """
         General method for the Lumidatum REST API.
@@ -56,23 +75,6 @@ class LumidatumClient(object):
 
             return response
 
-    def getRecommendations(self, parameters, model_id=None, deserialize_response=True):
-        """
-        Get recommendations for a model specified by model_id.
-
-        Returns a list of id/score pairs in descending order from the highest score.
-        """
-
-        return self.api(http_method='POST', parameters=parameters, model_id=model_id, api_function='predict', deserialize_response=deserialize_response)
-
-    def getRecommendationDescriptions(self, parameters, model_id=None, deserialize_response=True):
-        """
-        Get human readable recommendations.
-        """
-        parameters = dict(parameters)
-        parameters['human_readable'] = True
-
-        return self.api(http_method='POST', parameters=parameters, model_id=model_id, api_function='predict', deserialize_response=deserialize_response)
 
     # Data string takes priority, in the case of data_string and file_path params both being provided
     def sendUserData(self, data_string=None, file_path=None, model_id=None):

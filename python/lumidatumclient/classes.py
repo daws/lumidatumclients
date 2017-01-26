@@ -69,6 +69,7 @@ class LumidatumClient(object):
         """
         Get human readable recommendations.
         """
+        parameters = dict(parameters)
         parameters['human_readable'] = True
 
         return self.api(http_method='POST', parameters=parameters, model_id=model_id, api_function='predict', deserialize_response=deserialize_response)

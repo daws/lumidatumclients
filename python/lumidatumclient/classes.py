@@ -14,6 +14,14 @@ class LumidatumClient(object):
         self.host_address = host_address
 
 
+    def getSegmentation(self, parameters='', model_id=None, deserialize_response=True):
+
+        return self.api(http_method='POST', parameters=parameters, model_id=model_id, api_function='segmentation', deserialize_response=deserialize_response)
+
+    def getLifetimeValue(self, parameters, model_id=None, deserialize_response=True):
+
+        return self.api(http_method='POST', parameters=parameters, model_id=model_id, api_function='customervalue', deserialize_response=deserialize_response)
+
     def getRecommendations(self, parameters, model_id=None, deserialize_response=True):
         """
         Get recommendations for a model specified by model_id.

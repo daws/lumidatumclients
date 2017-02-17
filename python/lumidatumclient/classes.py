@@ -11,7 +11,7 @@ class LumidatumClient(object):
     def __init__(self, authentication_token, model_id=None, host_address='https://www.lumidatum.com'):
         self.authentication_token = authentication_token
         self.model_id = str(model_id)
-        self.host_address = host_address
+        self.host_address = host_address.rstrip('/')
 
 
     def getSegmentation(self, parameters='', model_id=None, deserialize_response=True):
@@ -56,7 +56,7 @@ class LumidatumClient(object):
             'content-type': 'application/json',
         }
 
-        api_endpoint = os.path.join(self.host_address, 'api/{}'.format(api_function), selected_model_id)
+        api_endpoint = '{}/api/{}'.format(self.host_address, api_function, selected_model_id)
 
         if http_method == 'POST':
             response = requests.post(

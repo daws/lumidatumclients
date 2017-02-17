@@ -6,8 +6,6 @@ import requests
 import requests_toolbelt
 
 
-__version__ = '0.5.3'
-
 
 class LumidatumClient(object):
 

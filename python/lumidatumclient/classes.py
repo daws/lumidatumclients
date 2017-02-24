@@ -5,6 +5,7 @@ import os
 import requests
 import requests_toolbelt
 
+import helpers
 
 
 class LumidatumClient(object):
@@ -120,23 +121,22 @@ class LumidatumClient(object):
             file_name = os.path.basename(file_path)
 
             presign_response = requests.post(
-                '{}/api/data?model_id={}&data_type={}&file_name={}&file_size'.format(self.host_address, selected_model_id, data_type, file_name, file_size),
+                '{}/api/data?model_id={}&data_type={}&file_name={}&file_size={}'.format(self.host_address, selected_model_id, data_type, file_name, file_size),
                 headers={
                     'content-type': 'application/json', # Do I need this?
                     'authorization': self.authentication_token,
                 }
             )
+            presign_response_object = helpers.parsePresignResponse(presign_response)
 
-            upload_response = self.sendFile(presign_response, file_path, file_upload_status_to_std_out)
+            upload_response = self.sendFile(presign_response_object, file_path, file_upload_status_to_std_out)
 
             return upload_response
         else:
             raise ValueError('Missing argument: data_string or file_path required')
 
-    def sendFile(self, presign_response, file_path, file_upload_status_to_std_out):
+    def sendFile(self, presign_response_object, file_path, file_upload_status_to_std_out):
         upload_file = open(file_path, 'rb')
-
-        presign_response_object = presign_response.json()
 
         destination_url = presign_response_object['url']
         fields = collections.OrderedDict(presign_response_object['fields'])

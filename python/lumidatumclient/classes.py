@@ -86,19 +86,19 @@ class LumidatumClient(object):
 
 
     # Data string takes priority, in the case of data_string and file_path params both being provided
-    def sendUserData(self, data_string=None, file_path=None, model_id=None):
+    def sendUserData(self, data_string=None, file_path=None, model_id=None, file_upload_status_to_std_out=True):
 
-        return self.dataUpdateApi(model_id, 'users', data_string, file_path)
+        return self.dataUpdateApi(model_id, 'users', data_string, file_path, file_upload_status_to_std_out)
 
-    def sendItemData(self, data_string=None, file_path=None, model_id=None):
+    def sendItemData(self, data_string=None, file_path=None, model_id=None, file_upload_status_to_std_out=True):
 
-        return self.dataUpdateApi(model_id, 'items', data_string, file_path)
+        return self.dataUpdateApi(model_id, 'items', data_string, file_path, file_upload_status_to_std_out)
 
-    def sendTransactionData(self, data_string=None, file_path=None, model_id=None):
+    def sendTransactionData(self, data_string=None, file_path=None, model_id=None, file_upload_status_to_std_out=True):
 
-        return self.dataUpdateApi(model_id, 'transactions', data_string, file_path)
+        return self.dataUpdateApi(model_id, 'transactions', data_string, file_path, file_upload_status_to_std_out)
 
-    def dataUpdateApi(self, model_id, data_type, data_string, file_path):
+    def dataUpdateApi(self, model_id, data_type, data_string, file_path, file_upload_status_to_std_out):
         selected_model_id = str(model_id) if model_id else self.model_id
 
         if selected_model_id is None:
@@ -127,13 +127,13 @@ class LumidatumClient(object):
                 }
             )
 
-            upload_response = self.sendFile(presign_response, file_path)
+            upload_response = self.sendFile(presign_response, file_path, file_upload_status_to_std_out)
 
             return upload_response
         else:
             raise ValueError('Missing argument: data_string or file_path required')
 
-    def sendFile(self, presign_response, file_path):
+    def sendFile(self, presign_response, file_path, file_upload_status_to_std_out):
         upload_file = open(file_path, 'rb')
 
         presign_response_object = presign_response.json()

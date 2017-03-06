@@ -136,14 +136,13 @@ class LumidatumClient(object):
             raise ValueError('Missing argument: data_string or file_path required')
 
     def sendFile(self, presign_response_object, file_path, file_upload_status_to_std_out):
-        upload_file = open(file_path, 'rb')
+        with open(file_path, 'rb') as upload_file:
+            destination_url = presign_response_object['url']
+            fields = collections.OrderedDict(presign_response_object['fields'])
+            fields['file'] = upload_file
 
-        destination_url = presign_response_object['url']
-        fields = collections.OrderedDict(presign_response_object['fields'])
-        fields['file'] = upload_file
+            multipart_encoded_data  = requests_toolbelt.multipart.encoder.MultipartEncoder(fields=fields)
 
-        multipart_encoded_data  = requests_toolbelt.multipart.encoder.MultipartEncoder(fields=fields)
-
-        response = requests.post(destination_url, data=multipart_encoded_data, headers={'Content-Type': multipart_encoded_data.content_type})
+            response = requests.post(destination_url, data=multipart_encoded_data, headers={'Content-Type': multipart_encoded_data.content_type})
 
         return response

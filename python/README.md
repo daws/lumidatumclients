@@ -63,6 +63,19 @@ Writes/updates item profile data.
 
 Writes/updates transaction data.
 
+`lumidatumclient.LumidatumClient.getLatestLTVReport(download_file_path, zipped=True, stream_download=True)`
+
+Gets the latest user lifetime value report.
+
+`download_file_path` should be a string and will also be used to set the file name of the download.
+
+`zipped` should be a boolean value indicating whether or not to download a zipped version of the requested report.
+
+`stream_download` should be a boolean value indicating whether or not to read the entire requested report into memory upon download while writing to the specified file path.
+
+`lumidatumclient.LumidatumClient.getLatestSegmentationReport(download_file_path, zipped=True, stream_download=True)`
+
+Gets the latest user segmentation report.
 
 #####Examples using the Client:<a name="examples"></a>
 

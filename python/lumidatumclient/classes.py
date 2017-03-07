@@ -184,11 +184,11 @@ class LumidatumClient(object):
                 'content-type': 'application/json',
                 'authorization': self.authentication_token,
             },
-            json={
+            data=json.dumps({
                 'model_id': self.model_id,
                 'key_name': key_name,
                 'is_download': True,
-            }
+            })
         )
 
         presigned_response_object = helpers.parsePresignResponse(presign_response)

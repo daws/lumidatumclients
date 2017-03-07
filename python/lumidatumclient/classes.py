@@ -154,15 +154,16 @@ class LumidatumClient(object):
 
     def getAvailableReports(self, report_type, zipped=True, latest=True):
         list_reports_response = requests.get(
-            '{}/api/data'.format(self.host_address),
+            '{}/api/data?model_id={}&report_type={}&zipped={}&latest={}'.format(
+                self.host_address,
+                self.model_id,
+                report_type,
+                zipped,
+                latest
+            ),
             headers={
                 'content-type': 'application/json',
                 'authorization': self.authentication_token,
-            },
-            json={
-                'report_type': report_type,
-                'zipped': zipped,
-                'latest': latest,
             }
         )
 

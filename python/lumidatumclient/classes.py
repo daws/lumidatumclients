@@ -152,6 +152,11 @@ class LumidatumClient(object):
 
         return self.getReport(latest_report_key_name, download_file_path, stream_download=stream_download)
 
+    def getLatestSegmentationReport(self, download_file_path, zipped=True, stream_download=True):
+        latest_report_key_name = self.getAvailableReports('SEG', zipped)
+
+        return self.getReport(latest_report_key_name, download_file_path, stream_download=stream_download)
+
     def getAvailableReports(self, report_type, zipped=True, latest=True):
         list_reports_response = requests.get(
             '{}/api/data?model_id={}&report_type={}&zipped={}&latest={}'.format(

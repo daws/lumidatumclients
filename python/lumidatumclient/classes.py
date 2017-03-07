@@ -146,3 +146,66 @@ class LumidatumClient(object):
             response = requests.post(destination_url, data=multipart_encoded_data, headers={'Content-Type': multipart_encoded_data.content_type})
 
         return response
+
+    def getLatestLTVReport(self, download_file_path, zipped=True, stream_download=True):
+        latest_report_key_name = self.getAvailableReports('LTV', zipped)
+
+        return self.getReport(latest_report_key_name, download_file_path, stream_download=stream_download)
+
+    def getAvailableReports(self, report_type, zipped=True, latest=True):
+        list_reports_response = requests.get(
+            '{}/api/data'.format(self.host_address),
+            headers={
+                'content-type': 'application/json',
+                'authorization': self.authentication_token,
+            },
+            json={
+                'report_type': report_type,
+                'zipped': zipped,
+                'latest': latest,
+            }
+        )
+
+        list_reports_response.raise_for_status()
+        list_reports_response_object = list_reports_response.json()
+
+        if list_reports_response_object.get('latest_key_name'):
+
+            return list_reports_response_object.get('latest_key_name')
+        else:
+
+            return list_reports_response_object.get('availabled_key_names')
+
+    def getReport(self, key_name, download_file_path, stream_download=True):
+        presign_response = requests.post(
+            '{}/api/data'.format(self.host_address),
+            headers={
+                'content-type': 'application/json',
+                'authorization': self.authentication_token,
+            },
+            json={
+                'model_id': self.model_id,
+                'key_name': key_name,
+                'is_download': True,
+            }
+        )
+
+        presigned_response_object = helpers.parsePresignResponse(presign_response)
+
+        download_response = self.downloadFile(download_file_path, presigned_response_object, stream_download)
+
+        return download_response
+
+    def downloadFile(self, download_file_path, presigned_response_object, stream_download):
+        with open(download_file_path, 'wb') as download_file:
+            response = requests.get(presigned_response_object.get('url'), stream=stream_download)
+            response.raise_for_status()
+
+            if stream_download:
+                for chunk in response.iter_content(chunk_size=1024):
+                    if chunk:
+                        download_file.write(chunk)
+            else:
+                download_file.write(response.text)
+
+        return response

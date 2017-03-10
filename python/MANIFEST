@@ -3,3 +3,4 @@ setup.cfg
 setup.py
 lumidatumclient/__init__.py
 lumidatumclient/classes.py
+lumidatumclient/helpers.py

@@ -48,5 +48,17 @@ end
 # Get item recs
 
 # Upload files
+class UploadDataFiles < Minitest::Test
+  def setup
+  end
+
+
+end
 
 # Download files
+class DownloadReports < Minitest::Test
+  def setup
+  end
+
+  
+end

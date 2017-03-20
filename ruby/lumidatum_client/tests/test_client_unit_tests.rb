@@ -51,7 +51,6 @@ def createTestClient
 end
 
 
-# Get item recs
 class Personalization
   def setup
     @test_client = createTestClient
@@ -66,7 +65,6 @@ class Personalization
   end
 end
 
-# Upload files
 class UploadDataFiles < Minitest::Test
   def setup
     @test_client = createTestClient
@@ -79,7 +77,6 @@ class UploadDataFiles < Minitest::Test
   end
 end
 
-# Download files
 class DownloadReports < Minitest::Test
   def setup
     @test_client = createTestClient

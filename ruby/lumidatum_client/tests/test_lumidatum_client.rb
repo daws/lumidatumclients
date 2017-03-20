@@ -26,22 +26,19 @@ class ClientInit < Minitest::Test
     assert_equal(@default_host_address, new_client.instance_variable_get(:@host_address))
   end
 
-  # Specified host
-  def test_specifying_host
+  def test_specifying_a_host
     new_client = LumidatumClient.new(@valid_api_token, @valid_model_id, @custom_host_address)
 
     assert_equal(@custom_host_address, new_client.instance_variable_get(:@host_address))
   end
 
-  # No model ID error
-  def test_nil_model_id_should_error
+  def test_nil_model_id_error
     assert_raises ArgumentError do
       LumidatumClient.new(@valid_api_token, nil)
     end
   end
 
-  # No API token error
-  def test_nil_api_token_should_error
+  def test_nil_api_token_error
     assert_raises ArgumentError do
       LumidatumClient.new(nil, @valid_model_id)
     end
@@ -50,6 +47,6 @@ end
 
 # Get item recs
 
-# Upload a file
+# Upload files
 
-# Download a file
+# Download files

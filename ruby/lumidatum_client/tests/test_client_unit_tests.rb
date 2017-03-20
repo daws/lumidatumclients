@@ -1,7 +1,6 @@
 require "minitest/autorun"
 require "./lib/lumidatum_client.rb"
 
-# assert_equal <expected>, <actual>
 
 class ClientInit < Minitest::Test
   def setup
@@ -14,22 +13,22 @@ class ClientInit < Minitest::Test
 
   # No specified host/default host
   def test_client_init
-    new_client = LumidatumClient.new(@valid_api_token, @valid_model_id, @custom_host_address)
+    test_client = LumidatumClient.new(@valid_api_token, @valid_model_id, @custom_host_address)
 
-    assert_instance_of(LumidatumClient, new_client)
+    assert_instance_of(LumidatumClient, test_client)
   end
 
   def test_default_host
-    new_client = LumidatumClient.new(@valid_api_token, @valid_model_id)
+    test_client = LumidatumClient.new(@valid_api_token, @valid_model_id)
 
     # Default host should be https://www.lumidatum.com
-    assert_equal(@default_host_address, new_client.instance_variable_get(:@host_address))
+    assert_equal(@default_host_address, test_client.host_address)
   end
 
   def test_specifying_a_host
-    new_client = LumidatumClient.new(@valid_api_token, @valid_model_id, @custom_host_address)
+    test_client = LumidatumClient.new(@valid_api_token, @valid_model_id, @custom_host_address)
 
-    assert_equal(@custom_host_address, new_client.instance_variable_get(:@host_address))
+    assert_equal(@custom_host_address, test_client.host_address)
   end
 
   def test_nil_model_id_error
@@ -45,20 +44,50 @@ class ClientInit < Minitest::Test
   end
 end
 
+
+def createTestClient
+
+  return LumidatumClient.new("API Key", 123)
+end
+
+
 # Get item recs
+class Personalization
+  def setup
+    @test_client = createTestClient
+  end
+
+  def test_item_recs
+    test_recommendations = []
+    # Set httpclient stub to return test_recommendations
+    recommendations = @test_client.getItemRecommendations({})
+
+    assert_equal(test_recommendations, recommendations)
+  end
+end
 
 # Upload files
 class UploadDataFiles < Minitest::Test
   def setup
+    @test_client = createTestClient
   end
 
+  def test_sending_file
+    file_upload_response = @test_client.sendTransactionData("path/to/transactions_data_file.csv")
 
+    assert_equal(201, file_upload_response.status)
+  end
 end
 
 # Download files
 class DownloadReports < Minitest::Test
   def setup
+    @test_client = createTestClient
   end
 
-  
+  def test_getting_report
+    file_download_response = @test_client.getLatestLTVReport("path/to/download_file.csv")
+
+    assert_equal(200, file_download_response.status)
+  end
 end

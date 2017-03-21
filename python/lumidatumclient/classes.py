@@ -180,7 +180,7 @@ class LumidatumClient(object):
             return list_reports_response_object.get('latest_key_name')
         else:
 
-            return list_reports_response_object.get('availabled_key_names')
+            return list_reports_response_object.get('available_key_names')
 
     def getReport(self, key_name, download_file_path, stream_download=True):
         presign_response = requests.post(

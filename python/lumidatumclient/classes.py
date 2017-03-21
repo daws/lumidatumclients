@@ -121,7 +121,13 @@ class LumidatumClient(object):
             file_name = os.path.basename(file_path)
 
             presign_response = requests.post(
-                '{}/api/data?model_id={}&data_type={}&file_name={}&file_size={}'.format(self.host_address, selected_model_id, data_type, file_name, file_size),
+                '{}/api/data?model_id={}&data_type={}&file_name={}&file_size={}'.format(
+                    self.host_address,
+                    selected_model_id,
+                    data_type,
+                    file_name,
+                    file_size
+                ),
                 headers={
                     'content-type': 'application/json', # Do I need this?
                     'authorization': self.authentication_token,
@@ -147,21 +153,23 @@ class LumidatumClient(object):
 
         return response
 
-    def getLatestLTVReport(self, download_file_path, zipped=True, stream_download=True):
-        latest_report_key_name = self.getAvailableReports('LTV', zipped)
+    def getLatestLTVReport(self, download_file_path, model_id=None, zipped=True, stream_download=True):
+        latest_report_key_name = self.getAvailableReports('LTV', model_id, zipped)
 
-        return self.getReport(latest_report_key_name, download_file_path, stream_download=stream_download)
+        return self.getReport(latest_report_key_name, download_file_path, model_id, stream_download=stream_download)
 
-    def getLatestSegmentationReport(self, download_file_path, zipped=True, stream_download=True):
-        latest_report_key_name = self.getAvailableReports('SEG', zipped)
+    def getLatestSegmentationReport(self, download_file_path, model_id=None, zipped=True, stream_download=True):
+        latest_report_key_name = self.getAvailableReports('SEG', model_id, zipped)
 
-        return self.getReport(latest_report_key_name, download_file_path, stream_download=stream_download)
+        return self.getReport(latest_report_key_name, download_file_path, model_id, stream_download=stream_download)
 
-    def getAvailableReports(self, report_type, zipped=True, latest=True):
+    def getAvailableReports(self, report_type, model_id, zipped=True, latest=True):
+        selected_model_id = str(model_id) if model_id else self.model_id
+
         list_reports_response = requests.get(
             '{}/api/data?model_id={}&report_type={}&zipped={}&latest={}'.format(
                 self.host_address,
-                self.model_id,
+                selected_model_id,
                 report_type,
                 zipped,
                 latest
@@ -182,7 +190,9 @@ class LumidatumClient(object):
 
             return list_reports_response_object.get('available_key_names')
 
-    def getReport(self, key_name, download_file_path, stream_download=True):
+    def getReport(self, key_name, download_file_path, model_id, stream_download=True):
+        selected_model_id = str(model_id) if model_id else self.model_id
+
         presign_response = requests.post(
             '{}/api/data'.format(self.host_address),
             headers={
@@ -190,7 +200,7 @@ class LumidatumClient(object):
                 'authorization': self.authentication_token,
             },
             data=json.dumps({
-                'model_id': self.model_id,
+                'model_id': selected_model_id
                 'key_name': key_name,
                 'is_download': True,
             })

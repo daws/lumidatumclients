@@ -121,16 +121,16 @@ class LumidatumClient(object):
             file_name = os.path.basename(file_path)
 
             presign_response = requests.post(
-                '{}/api/data?model_id={}&data_type={}&file_name={}&file_size={}'.format(
-                    self.host_address,
-                    selected_model_id,
-                    data_type,
-                    file_name,
-                    file_size
-                ),
+                '{}/api/data'.format(self.host_address),
                 headers={
                     'content-type': 'application/json', # Do I need this?
                     'authorization': self.authentication_token,
+                },
+                data={
+                    'model_id': selected_model_id,
+                    'data_type': data_type,
+                    'file_name': file_name,
+                    'file_size': file_size,
                 }
             )
             presign_response_object = helpers.parsePresignResponse(presign_response)

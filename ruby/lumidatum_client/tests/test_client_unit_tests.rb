@@ -1,4 +1,8 @@
+require "json"
 require "minitest/autorun"
+
+require "webmock/test_unit"
+
 require "./lib/lumidatum_client.rb"
 
 
@@ -57,8 +61,15 @@ class Personalization
   end
 
   def test_item_recs
-    test_recommendations = []
-    # Set httpclient stub to return test_recommendations
+    test_recommendations = [[], [], []]
+    WebMock.stub_request(
+      :post,
+      "https://www.lumidatum.com/api/predict/123"
+    ).to_return(
+      status: 200,
+      body: JSON.generate(test_recommendations)
+    )
+
     recommendations = @test_client.getItemRecommendations({})
 
     assert_equal(test_recommendations, recommendations)
@@ -71,9 +82,28 @@ class UploadDataFiles < Minitest::Test
   end
 
   def test_sending_file
-    file_upload_response = @test_client.sendTransactionData("path/to/transactions_data_file.csv")
+    # Upload presign request
+    WebMock.stub_request(
+      :post,
+      "https://www.lumidatum.com/api/data"
+    ).to_return(
+      status: 201,
+      body: JSON.generate({"url": "http://test.upload.url"})
+    )
+    # S3 upload response
+    WebMock.stub_request(
+      :post,
+      "http://test.upload.url"
+    ).with(
+      headers: {},
+      body: JSON.generate({})
+    ).to_return(
+      status: 204
+    )
 
-    assert_equal(201, file_upload_response.status)
+    file_upload_response = @test_client.sendTransactionData(file_path: "path/to/transactions_data_file.csv")
+
+    assert_equal(204, file_upload_response.status)
   end
 end
 
@@ -83,8 +113,29 @@ class DownloadReports < Minitest::Test
   end
 
   def test_getting_report
-    file_download_response = @test_client.getLatestLTVReport("path/to/download_file.csv")
+    # List response
+    WebMock.stub_request(
+      :get,
+      "https://www.lumidatum.com/api/data?latest=true&model_id=123&report_type=LTV&zipped=true&latest=true"
+    ).to_return(
+      status: 200,
+      body: JSON.generate({"key_name" => "test_key_name"})
+    )
+    # Presign response
+    WebMock.stub_request(
+      :post, "https://www.lumidatum.com/api/data"
+    ).to_return(
+      status: 200,
+      body: JSON.generate({"url" => "http://test.download.url"})
+    )
+    # S3 download response
+    WebMock.stub_request(:get, "http://test.download.url")
+
+    file_download_response = @test_client.getLatestLTVReport("test_download_file.csv")
 
     assert_equal(200, file_download_response.status)
+
+    # Clean up
+    File.delete("test_download_file.csv")
   end
 end

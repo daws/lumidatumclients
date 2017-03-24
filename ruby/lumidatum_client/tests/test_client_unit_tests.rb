@@ -88,20 +88,17 @@ class UploadDataFiles < Minitest::Test
       "https://www.lumidatum.com/api/data"
     ).to_return(
       status: 201,
-      body: JSON.generate({"url": "http://test.upload.url"})
+      body: JSON.generate({"url" => "http://test.upload.url", "fields" => {}})
     )
     # S3 upload response
     WebMock.stub_request(
       :post,
       "http://test.upload.url"
-    ).with(
-      headers: {},
-      body: JSON.generate({})
     ).to_return(
       status: 204
     )
 
-    file_upload_response = @test_client.sendTransactionData(file_path: "path/to/transactions_data_file.csv")
+    file_upload_response = @test_client.sendTransactionData(file_path: "tests/resources/test_data.csv")
 
     assert_equal(204, file_upload_response.status)
   end

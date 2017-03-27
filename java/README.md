@@ -1,14 +1,14 @@
-#Lumidatum Java Client Documentation:
+# Lumidatum Java Client Documentation:
 
-###Quick Start:
+### Quick Start:
 
 Simply get the compiled jar (lumidatum-client.1.1.0.jar) and add it to your class path.
 You can find the jar in the repository at <a href="https://github.com/Lumidatum/lumidatumclients/tree/master/java/resources">`lumidatumclients/java/resources`</a>.
 [Examples](#examples) below.
 
-####Client:
+#### Client:
 
-#####com.lumidatum.Client
+##### com.lumidatum.Client
 `Client()`
 
 `Client(String hostAddress, String authenticationToken)`
@@ -17,7 +17,7 @@ You can find the jar in the repository at <a href="https://github.com/Lumidatum/
 <br />
 throws `IllegalArgumentException` for `modelId` values less than `1`
 
-#####methods
+##### methods
 
 `Client.postPredict(ProductPostParameters parameters)`
 <br />
@@ -72,25 +72,25 @@ returns `SendDataResponse`
 returns `SendDataResponse`
 
 
-####PostParameters:
+#### PostParameters:
 
-#####com.lumidatum.client.ProductPostParameters
+##### com.lumidatum.client.ProductPostParameters
 `ProductPostParameters()`
 
 `ProductPostParameters(long customerId, long orderId, List<Long> includedProductIds, List<Long> excludedProductIds, int numberOfRecommendations)`
 
-#####com.lumidatum.client.AuctionPostParameters
+##### com.lumidatum.client.AuctionPostParameters
 `AuctionPostParameters()`
 
 `AuctionPostParameters(long bidderId, List<Long> includedItemIds, List<Long> excludedItemIds, int numberOfRecommendations)`
 
 
-####Responses:
+#### Responses:
 
-#####com.lumidatum.client.ProductResponse
+##### com.lumidatum.client.ProductResponse
 `ProductResponse()`
 
-#####methods
+##### methods
 
 `ProductResponse.getModelId()`
 <br />
@@ -134,10 +134,10 @@ returns `void`
 
 <br />
 
-#####com.lumidatum.client.AuctionResponse
+##### com.lumidatum.client.AuctionResponse
 `AuctionResponse()`
 
-#####methods
+##### methods
 
 `AuctionResponse.getModelId()`
 <br />
@@ -179,13 +179,13 @@ returns `java.util.List<com.lumidatum.client.AuctionRecommendation>`
 <br />
 returns `void`
 
-#####com.lumidatum.client.SendDataResponse
+##### com.lumidatum.client.SendDataResponse
 `SendDataResponse()`
 
 
-####Recomendations:
+#### Recomendations:
 
-#####com.lumidatum.client.ProductRecommendation
+##### com.lumidatum.client.ProductRecommendation
 `ProductRecommendation()`
 
 `ProductRecommendation(long productId)`
@@ -194,7 +194,7 @@ returns `void`
 
 `ProductRecommendation(long productId, String productDescription)`
 
-#####methods
+##### methods
 
 `ProductRecommendation.getProductId()`
 <br />
@@ -214,7 +214,7 @@ returns `void`
 
 <br />
 
-#####com.lumidatum.client.AuctionRecommendation
+##### com.lumidatum.client.AuctionRecommendation
 `AuctionRecommendation()`
 
 `AuctionRecommendation(long itemId)`
@@ -223,7 +223,7 @@ returns `void`
 
 `AuctionRecommendation(long itemId, String itemDescription)`
 
-#####methods
+##### methods
 
 `AuctionRecommendation.getItemId()`
 <br />
@@ -242,24 +242,24 @@ returns `String`
 returns `void`
 
 
-##API:
+## API:
 
-###POST /api/predict/<modelId>
+### POST /api/predict/<modelId>
 
 
-####Product recommender:
+#### Product recommender:
 
-#####Parameters:
+##### Parameters:
 
 `long modelId` (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation.)
 
 `ProductPostParameters parameters`
 
-#####Returns:
+##### Returns:
 
 `ProductResponse response`
 
-#####Example with Client:<a name="examples"></a>
+##### Example with Client:<a name="examples"></a>
 ```java
 // Create an instance of a Client
 String hostAddress = "http://www.lumidatum.com;
@@ -301,19 +301,19 @@ List<ProductRecommendation> recommendations = response.getRecommendations();
 
 
 
-####Auction recommender:
+#### Auction recommender:
 
-#####Parameters:
+##### Parameters:
 
 `long modelId` (will override modelId set in the Client instance for a given postPredict call, is required if no modelId was set at Client instantiation)
 
 `AuctionPostParameters parameters`
 
-#####Returns:
+##### Returns:
 
 `AuctionResponse response`
 
-#####Example with Client:
+##### Example with Client:
 ```java
 // Create an instance of a Client
 String hostAddress = "http://www.lumidatum.com;
@@ -353,9 +353,9 @@ Date recommendationCreationTime = response.getCreatedAt();
 List<AuctionRecommendation> recommendations = response.getRecommendations();
 ```
 
-####Sending Data
+#### Sending Data
 
-#####Parameters:
+##### Parameters:
 `String inputFilePath` A string representing the path to a local file you'd like to upload.
 
 or
@@ -366,7 +366,7 @@ or
 
 `SendDataResponse response`
 
-#####Example with Client:
+##### Example with Client:
 ```
 // Send additional data.
 String myUserDataString = "{\"user_id\": 1, \"some_field\": \"some value\"}\n{\"user_id\": 2, \"some_field\": \"some other value\"}";

@@ -18,7 +18,7 @@ To get the client in Ruby simply run:
 
 ##### Methods:
 
-`LumidatumClient.getRecommendations(parameters, model_id: nil)`
+`LumidatumClient.getItemRecommendations(parameters, model_id: nil)`
 
 Input `parameters` is a single Hash. The key names and value types vary by model implementation. If `model_id` is provided both at client instantiation and in a method call, the value provided at the method call is used to call the API.
 

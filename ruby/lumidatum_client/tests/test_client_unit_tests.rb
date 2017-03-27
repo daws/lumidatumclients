@@ -35,10 +35,10 @@ class ClientInit < Minitest::Test
     assert_equal(@custom_host_address, test_client.host_address)
   end
 
-  def test_nil_model_id_error
-    assert_raises ArgumentError do
-      LumidatumClient.new(@valid_api_token, nil)
-    end
+  def test_nil_model_id_is_fine
+    test_client = LumidatumClient.new(@valid_api_token)
+
+    assert_nil(test_client.model_id)
   end
 
   def test_nil_api_token_error
@@ -52,6 +52,11 @@ end
 def createTestClient
 
   return LumidatumClient.new("API Key", 123)
+end
+
+def createTestClientNoModelId
+
+  return LumidatumClient.new("API Key")
 end
 
 
@@ -76,37 +81,73 @@ class Personalization
   end
 end
 
+
+def setupValidUploadResponses
+  # Upload presign request
+  WebMock.stub_request(
+    :post,
+    "https://www.lumidatum.com/api/data"
+  ).to_return(
+    status: 201,
+    body: JSON.generate({"url" => "http://test.upload.url", "fields" => {}})
+  )
+  # S3 upload response
+  WebMock.stub_request(
+    :post,
+    "http://test.upload.url"
+  ).to_return(
+    status: 204
+  )
+end
+
+
 class UploadDataFiles < Minitest::Test
   def setup
     @test_client = createTestClient
   end
 
   def test_sending_file
-    # Upload presign request
-    WebMock.stub_request(
-      :post,
-      "https://www.lumidatum.com/api/data"
-    ).to_return(
-      status: 201,
-      body: JSON.generate({"url" => "http://test.upload.url", "fields" => {}})
-    )
-    # S3 upload response
-    WebMock.stub_request(
-      :post,
-      "http://test.upload.url"
-    ).to_return(
-      status: 204
-    )
+    setupValidUploadResponses
 
     file_upload_response = @test_client.sendTransactionData(file_path: "tests/resources/test_data.csv")
 
     assert_equal(204, file_upload_response.status)
+  end
+
+  def test_no_model_id_error
+    no_model_id_test_client = createTestClientNoModelId
+
+    assert_raises ArgumentError do
+      no_model_id_test_client.sendTransactionData(file_path: "tests/resources/test_data.csv")
+    end
+  end
+
+  def test_no_model_id_in_client
+    setupValidUploadResponses
+
+    no_model_id_test_client = createTestClientNoModelId
+
+    no_model_id_test_client.sendTransactionData(file_path: "tests/resources/test_data.csv", model_id: 123)
   end
 end
 
 class DownloadReports < Minitest::Test
   def setup
     @test_client = createTestClient
+  end
+
+  def test_no_report_yet
+    # List response
+    WebMock.stub_request(
+      :get,
+      "https://www.lumidatum.com/api/data?latest=true&model_id=123&report_type=LTV&zipped=true&latest=true"
+    ).to_return(
+      status: 200,
+      body: JSON.generate({"key_name" => "test_key_name"})
+    )
+
+    # Raises error for 404 response on list
+    file_download_response = @test_client.getLatestLTVReport("test_download_file.csv")
   end
 
   def test_getting_report

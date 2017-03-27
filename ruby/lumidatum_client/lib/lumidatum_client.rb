@@ -10,11 +10,9 @@ class LumidatumClient
   attr_accessor :http_client
   attr_accessor :file_handler
 
-  def initialize(authentication_token, model_id, host_address="https://www.lumidatum.com", http_client=nil, file_handler=File)
+  def initialize(authentication_token, model_id=nil, host_address="https://www.lumidatum.com", http_client=nil, file_handler=File)
     if authentication_token == nil
       raise ArgumentError, "authentication_token must not be nil"
-    elsif model_id == nil
-      raise ArgumentError, "model_id must not be nil"
     end
 
     @authentication_token = authentication_token
@@ -32,13 +30,13 @@ class LumidatumClient
 
 
   def getItemRecommendations(parameters, model_id: nil, deserialize_response: true)
-    model_id = if model_id == nil then @model_id else model_id end
+    model_id = _getModelIdOrError(model_id)
 
     return api("POST", "api/predict/#{model_id}", nil, parameters, deserialize_response: deserialize_response)
   end
 
   def getUserRecommendations(parameters, model_id: nil, deserialize_response: true)
-    model_id = if model_id == nil then @model_id else model_id end
+    model_id = _getModelIdOrError(model_id)
 
     return api("POST", "api/predict/#{model_id}", nil, parameters, deserialize_response: deserialize_response)
   end
@@ -46,25 +44,25 @@ class LumidatumClient
 
   # Data upload
   def sendUserData(data_string: nil, file_path: nil, model_id: nil)
-    model_id = if model_id == nil then @model_id else model_id end
+    model_id = _getModelIdOrError(model_id)
 
     return sendData("users", data_string, file_path, model_id)
   end
 
   def sendItemData(data_string: nil, file_path: nil, model_id: nil)
-    model_id = if model_id == nil then @model_id else model_id end
+    model_id = _getModelIdOrError(model_id)
 
     return sendData("items", data_string, file_path, model_id)
   end
 
   def sendTransactionData(data_string: nil, file_path: nil, model_id: nil)
-    model_id = if model_id == nil then @model_id else model_id end
+    model_id = _getModelIdOrError(model_id)
 
     return sendData("transactions", data_string, file_path, model_id)
   end
 
   def sendData(data_type, data_string, file_path, model_id)
-    model_id = if model_id == nil then @model_id else model_id end
+    model_id = _getModelIdOrError(model_id)
 
     url_endpoint = "api/data"
 
@@ -94,7 +92,7 @@ class LumidatumClient
 
   # File download
   def getLatestLTVReport(download_file_path, model_id: nil, zipped: true, stream_download: true)
-    model_id = if model_id == nil then @model_id else model_id end
+    model_id = _getModelIdOrError(model_id)
 
     latest_key_name = getAvailableReports("LTV", model_id, zipped: zipped)
 
@@ -109,7 +107,7 @@ class LumidatumClient
   end
 
   def getLatestSegmentationReport(download_file_path, model_id: nil, zipped: true, stream_download: true)
-    model_id = if model_id == nil then @model_id else model_id end
+    model_id = _getModelIdOrError(model_id)
 
     latest_key_name = getAvailableReports("SEG", model_id, zipped: zipped)
     presigned_response_object = getPresignedResponse(latest_key_name, model_id, is_download: true)
@@ -152,6 +150,7 @@ class LumidatumClient
     return api("POST", "api/data", nil, parameters)
   end
 
+
   def api(http_method, url_endpoint, url_query_parameters, parameters, deserialize_response: true)
     formatted_url = "#{@host_address}/#{url_endpoint}"
     if url_query_parameters
@@ -178,5 +177,15 @@ class LumidatumClient
 
       return api_response
     end
+  end
+
+
+  def _getModelIdOrError(model_id)
+    model_id = if model_id == nil then @model_id else model_id end
+    if model_id == nil
+      raise ArgumentError, "model_id must be set during client instantiation or provided during your instance method call."
+    end
+
+    return model_id
   end
 end

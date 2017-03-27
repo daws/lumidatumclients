@@ -142,12 +142,14 @@ class DownloadReports < Minitest::Test
       :get,
       "https://www.lumidatum.com/api/data?latest=true&model_id=123&report_type=LTV&zipped=true&latest=true"
     ).to_return(
-      status: 200,
-      body: JSON.generate({"key_name" => "test_key_name"})
+      status: 404,
+      body: JSON.generate({"error" => "Requested item does not exist."})
     )
 
-    # Raises error for 404 response on list
-    file_download_response = @test_client.getLatestLTVReport("test_download_file.csv")
+    # Raises error for 404 response on list call
+    assert_raises IOError do
+      file_download_response = @test_client.getLatestLTVReport("test_download_file.csv")
+    end
   end
 
   def test_getting_report

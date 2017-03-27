@@ -122,8 +122,12 @@ class LumidatumClient
 
   def getAvailableReports(report_type, model_id, zipped: true, latest: true)
     url_query_parameters = {:model_id => model_id, :report_type => report_type, :zipped => zipped, :latest => true}
-    list_reports_response_object = api("GET", "api/data", url_query_parameters, model_id)
-    # list_reports_response_object = JSON.parse(list_reports_response.body)
+    list_reports_response = api("GET", "api/data", url_query_parameters, model_id, deserialize_response: false)
+    list_reports_response_object = JSON.parse(list_reports_response.body)
+
+    if list_reports_response.status != 200
+      raise IOError, "HTTP #{list_reports_response.status}: #{list_reports_response_object["error"]} "
+    end
 
     if list_reports_response_object["latest_key_name"] != nil
 

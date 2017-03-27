@@ -6,7 +6,7 @@ To get the client in Ruby simply run:
 
 `gem install lumidatum_client`
 
-<i>Latest version: 0.1.3</i>
+<i>Latest version: 0.1.4</i>
 
 <i>*Currently Ruby version 2.4.0 is supported</i>
 

@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "lumidatum_client"
-  spec.version       = "0.1.3"
+  spec.version       = "0.1.4"
   spec.authors       = ["Mat Lee"]
   spec.email          = ["matt@lumidatum.com"]
   spec.summary       = %q{}

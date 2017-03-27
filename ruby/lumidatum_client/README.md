@@ -85,7 +85,7 @@ client = LumidatumClient(auth_token, model_id)
 
 params = {<your model params>}
 
-recs = client.getRecommendations(params)
+recs = client.getItemRecommendations(params)
 ```
 
 ###### Updating user data

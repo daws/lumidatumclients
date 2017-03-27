@@ -1,6 +1,6 @@
-#Lumidatum Python Client Documentation:
+# Lumidatum Python Client Documentation:
 
-###Quick Start:
+### Quick Start:
 
 To get the client in Python simply run:
 
@@ -10,13 +10,13 @@ To get the client in Python simply run:
 
 <i>*Currently Python versions 2.6, 2.7, 3.4, 3.5 are supported.</i>
 
-####Client:
+#### Client:
 
 `lumidatumclient.LumidatumClient(auth_token, model_id=None, host_address='https://www.lumidatum.com')`
 
 `model_id` may be a string or int, and if not provided at client instantiation, must be provided in all method calls.
 
-#####Methods:
+##### Methods:
 
 `lumidatumclient.LumidatumClient.getRecommendations(parameters, model_id=None)`
 
@@ -31,7 +31,7 @@ Requires either `data_string` or `file_path` to be provided, and `model_id` if `
 
 Returns a requests.models.Response object.
 
-The data string parameter (data_string) should in the format below.
+The data string parameter (`data_string`) should in the format below.
 
 <i>(format type 1)</i>
 ```
@@ -77,9 +77,9 @@ Gets the latest user lifetime value report.
 
 Gets the latest user segmentation report.
 
-#####Examples using the Client:<a name="examples"></a>
+##### Examples using the Client:<a name="examples"></a>
 
-######Getting recommendations 
+###### Getting recommendations 
 ```
 from lumidatumclient import LumidatumClient
 
@@ -93,14 +93,14 @@ params = {<your model params>}
 recs = client.getRecommendations(params)
 ```
 
-######Updating user data
+###### Updating user data
 ```
 user_data_string = '{"id": 123 ... "field": "values, text, whatever\'s fine"}\n{"id": 345, ... "field": "values \\n with new lines"}'
 
 user_data_update_response = client.sendUserData(user_data_string)
 ```
 
-######Updating transaction data
+###### Updating transaction data
 ```
 # Sending data in a request body
 transaction_data_string = '...'

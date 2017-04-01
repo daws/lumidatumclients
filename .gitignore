@@ -1,5 +1,6 @@
 *.class
 *.pyc
+*.gem
 
 tests/__pycache__
 

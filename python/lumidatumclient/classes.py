@@ -200,7 +200,7 @@ class LumidatumClient(object):
                 'authorization': self.authentication_token,
             },
             data=json.dumps({
-                'model_id': selected_model_id
+                'model_id': selected_model_id,
                 'key_name': key_name,
                 'is_download': True,
             })

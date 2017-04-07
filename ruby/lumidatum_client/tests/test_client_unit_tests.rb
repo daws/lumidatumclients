@@ -100,6 +100,15 @@ def setupValidUploadResponses
   )
 end
 
+def setupValidSendDataStringResponse
+  WebMock.stub_request(
+    :post,
+    "https://www.lumidatum.com/api/data?model_id=123&data_type=users"
+  ).to_return(
+    status: 201
+  )
+end
+
 
 class UploadDataFiles < Minitest::Test
   def setup
@@ -128,6 +137,20 @@ class UploadDataFiles < Minitest::Test
     no_model_id_test_client = createTestClientNoModelId
 
     no_model_id_test_client.sendTransactionData(file_path: "tests/resources/test_data.csv", model_id: 123)
+  end
+end
+
+class SendDataString < Minitest::Test
+  def setup
+    @test_client = createTestClient
+  end
+
+  def test_sending_data_string
+    setupValidSendDataStringResponse
+
+    send_data_string_response = @test_client.sendUserData(data_string: "{\"some_key\": \"some string data\"}")
+
+    assert_equal(201, send_data_string_response.status)
   end
 end
 

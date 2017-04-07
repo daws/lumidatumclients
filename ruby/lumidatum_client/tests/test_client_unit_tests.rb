@@ -136,7 +136,9 @@ class UploadDataFiles < Minitest::Test
 
     no_model_id_test_client = createTestClientNoModelId
 
-    no_model_id_test_client.sendTransactionData(file_path: "tests/resources/test_data.csv", model_id: 123)
+    file_upload_response = no_model_id_test_client.sendTransactionData(file_path: "tests/resources/test_data.csv", model_id: 123)
+
+    assert_equal(204, file_upload_response.status)
   end
 end
 

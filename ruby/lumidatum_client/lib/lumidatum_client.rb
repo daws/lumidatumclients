@@ -69,7 +69,7 @@ class LumidatumClient
     if data_string != nil
       url_query_parameters = {:model_id => model_id, :data_type => data_type}
 
-      return api("POST", url_endpoint, url_query_parameters, parameters)
+      return api("POST", url_endpoint, url_query_parameters, data_string, deserialize_response: false)
     else
       file_name = File.basename(file_path)
       file_size = nil
@@ -168,6 +168,8 @@ class LumidatumClient
     elsif http_method == "POST"
       if parameters.class != String
         parameters_str = JSON.generate(parameters)
+      else
+        parameters_str = parameters
       end
       api_response = @http_client.post(formatted_url, header: headers, body: parameters_str)
     end

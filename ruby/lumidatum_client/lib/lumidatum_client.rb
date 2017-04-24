@@ -29,13 +29,23 @@ class LumidatumClient
   end
 
 
-  def getItemRecommendations(parameters, model_id: nil, deserialize_response: true)
+  def getItemRecommendations(parameters, options = {})
+    options = {
+      model_id: nil,
+      deserialize_response: true
+    }.merge(options)
+
     model_id = _getModelIdOrError(model_id)
 
     return api("POST", "api/predict/#{model_id}", nil, parameters, deserialize_response: deserialize_response)
   end
 
-  def getUserRecommendations(parameters, model_id: nil, deserialize_response: true)
+  def getUserRecommendations(parameters, options = {})
+    options = {
+      model_id: nil,
+      deserialize_response: true
+    }.merge(options)
+
     model_id = _getModelIdOrError(model_id)
 
     return api("POST", "api/predict/#{model_id}", nil, parameters, deserialize_response: deserialize_response)
@@ -43,19 +53,37 @@ class LumidatumClient
 
 
   # Data upload
-  def sendUserData(data_string: nil, file_path: nil, model_id: nil)
+  def sendUserData(options = {})
+    options = {
+      data_string: nil,
+      file_path: nil,
+      model_id: nil
+    }.merge(options)
+
     model_id = _getModelIdOrError(model_id)
 
     return sendData("users", data_string, file_path, model_id)
   end
 
-  def sendItemData(data_string: nil, file_path: nil, model_id: nil)
+  def sendItemData(options = {})
+    options = {
+      data_string: nil,
+      file_path: nil,
+      model_id: nil
+    }.merge(options)
+
     model_id = _getModelIdOrError(model_id)
 
     return sendData("items", data_string, file_path, model_id)
   end
 
-  def sendTransactionData(data_string: nil, file_path: nil, model_id: nil)
+  def sendTransactionData(options = {})
+    options = {
+      data_string: nil,
+      file_path: nil,
+      model_id: nil
+    }.merge(options)
+
     model_id = _getModelIdOrError(model_id)
 
     return sendData("transactions", data_string, file_path, model_id)
@@ -91,7 +119,13 @@ class LumidatumClient
   end
 
   # File download
-  def getLatestLTVReport(download_file_path, model_id: nil, zipped: true, stream_download: true)
+  def getLatestLTVReport(download_file_path, options = {})
+    options = {
+      model_id: nil,
+      zipped: true,
+      stream_download: true
+    }.merge(options)
+
     model_id = _getModelIdOrError(model_id)
 
     latest_key_name = getAvailableReports("LTV", model_id, zipped: zipped)
@@ -106,7 +140,13 @@ class LumidatumClient
     return report_response
   end
 
-  def getLatestSegmentationReport(download_file_path, model_id: nil, zipped: true, stream_download: true)
+  def getLatestSegmentationReport(download_file_path, options = {})
+    options = {
+      model_id: nil,
+      zipped: true,
+      stream_download: true
+    }.merge(options)
+
     model_id = _getModelIdOrError(model_id)
 
     latest_key_name = getAvailableReports("SEG", model_id, zipped: zipped)
@@ -120,7 +160,12 @@ class LumidatumClient
     return report_response
   end
 
-  def getAvailableReports(report_type, model_id, zipped: true, latest: true)
+  def getAvailableReports(report_type, model_id, options = {})
+    options = {
+      zipped: true,
+      latest: true
+    }.merge(options)
+
     url_query_parameters = {:model_id => model_id, :report_type => report_type, :zipped => zipped, :latest => true}
     list_reports_response = api("GET", "api/data", url_query_parameters, model_id, deserialize_response: false)
     list_reports_response_object = JSON.parse(list_reports_response.body)
@@ -138,7 +183,14 @@ class LumidatumClient
     end
   end
 
-  def getPresignedResponse(key_name, model_id, data_type: nil, file_name: nil, file_size: nil, is_download: false)
+  def getPresignedResponse(key_name, model_id, options = {})
+    options = {
+      data_type: nil,
+      file_name: nil,
+      file_size: nil,
+      is_download: false
+    }.merge(options)
+
     parameters = {"model_id": model_id}
 
     if is_download
@@ -155,7 +207,11 @@ class LumidatumClient
   end
 
 
-  def api(http_method, url_endpoint, url_query_parameters, parameters, deserialize_response: true)
+  def api(http_method, url_endpoint, url_query_parameters, parameters, options = {})
+    options = {
+      deserialize_response: true
+    }.merge(options)
+
     formatted_url = "#{@host_address}/#{url_endpoint}"
     if url_query_parameters
       formatted_url = formatted_url + "?" + URI.encode_www_form(url_query_parameters)

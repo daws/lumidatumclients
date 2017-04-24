@@ -191,7 +191,7 @@ class LumidatumClient
       is_download: false
     }.merge(options)
 
-    parameters = {"model_id": model_id}
+    parameters = {"model_id" => model_id}
 
     if is_download
       parameters["key_name"] = key_name

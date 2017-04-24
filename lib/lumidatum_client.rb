@@ -35,9 +35,9 @@ class LumidatumClient
       deserialize_response: true
     }.merge(options)
 
-    model_id = _getModelIdOrError(model_id)
+    model_id = _getModelIdOrError(options[:model_id])
 
-    return api("POST", "api/predict/#{model_id}", nil, parameters, deserialize_response: deserialize_response)
+    return api("POST", "api/predict/#{model_id}", nil, parameters, deserialize_response: options[:deserialize_response])
   end
 
   def getUserRecommendations(parameters, options = {})
@@ -46,9 +46,9 @@ class LumidatumClient
       deserialize_response: true
     }.merge(options)
 
-    model_id = _getModelIdOrError(model_id)
+    model_id = _getModelIdOrError(options[:model_id])
 
-    return api("POST", "api/predict/#{model_id}", nil, parameters, deserialize_response: deserialize_response)
+    return api("POST", "api/predict/#{model_id}", nil, parameters, deserialize_response: options[:deserialize_response])
   end
 
 
@@ -60,9 +60,9 @@ class LumidatumClient
       model_id: nil
     }.merge(options)
 
-    model_id = _getModelIdOrError(model_id)
+    model_id = _getModelIdOrError(options[:model_id])
 
-    return sendData("users", data_string, file_path, model_id)
+    return sendData("users", options[:data_string], options[:file_path], model_id)
   end
 
   def sendItemData(options = {})
@@ -72,9 +72,9 @@ class LumidatumClient
       model_id: nil
     }.merge(options)
 
-    model_id = _getModelIdOrError(model_id)
+    model_id = _getModelIdOrError(options[:model_id])
 
-    return sendData("items", data_string, file_path, model_id)
+    return sendData("items", options[:data_string], options[:file_path], model_id)
   end
 
   def sendTransactionData(options = {})
@@ -84,9 +84,9 @@ class LumidatumClient
       model_id: nil
     }.merge(options)
 
-    model_id = _getModelIdOrError(model_id)
+    model_id = _getModelIdOrError(options[:model_id])
 
-    return sendData("transactions", data_string, file_path, model_id)
+    return sendData("transactions", options[:data_string], options[:file_path], model_id)
   end
 
   def sendData(data_type, data_string, file_path, model_id)
@@ -126,9 +126,9 @@ class LumidatumClient
       stream_download: true
     }.merge(options)
 
-    model_id = _getModelIdOrError(model_id)
+    model_id = _getModelIdOrError(options[:model_id])
 
-    latest_key_name = getAvailableReports("LTV", model_id, zipped: zipped)
+    latest_key_name = getAvailableReports("LTV", model_id, zipped: options[:zipped])
 
     presigned_response_object = getPresignedResponse(latest_key_name, model_id, is_download: true)
 
@@ -147,9 +147,9 @@ class LumidatumClient
       stream_download: true
     }.merge(options)
 
-    model_id = _getModelIdOrError(model_id)
+    model_id = _getModelIdOrError(options[:model_id])
 
-    latest_key_name = getAvailableReports("SEG", model_id, zipped: zipped)
+    latest_key_name = getAvailableReports("SEG", model_id, zipped: options[:zipped])
     presigned_response_object = getPresignedResponse(latest_key_name, model_id, is_download: true)
 
     report_response = @http_client.get(presigned_response_object["url"])
@@ -166,7 +166,7 @@ class LumidatumClient
       latest: true
     }.merge(options)
 
-    url_query_parameters = {:model_id => model_id, :report_type => report_type, :zipped => zipped, :latest => true}
+    url_query_parameters = {:model_id => model_id, :report_type => report_type, :zipped => options[:zipped], :latest => true}
     list_reports_response = api("GET", "api/data", url_query_parameters, model_id, deserialize_response: false)
     list_reports_response_object = JSON.parse(list_reports_response.body)
 
@@ -193,13 +193,13 @@ class LumidatumClient
 
     parameters = {"model_id" => model_id}
 
-    if is_download
+    if options[:is_download]
       parameters["key_name"] = key_name
       parameters["is_download"] = true
     else
-      parameters["data_type"] = data_type
-      parameters["file_name"] = file_name
-      parameters["file_size"] = file_size
+      parameters["data_type"] = options[:data_type]
+      parameters["file_name"] = options[:file_name]
+      parameters["file_size"] = options[:file_size]
       parameters["presigned_url_http_method"] = "PUT"
     end
 
@@ -230,7 +230,7 @@ class LumidatumClient
       api_response = @http_client.post(formatted_url, header: headers, body: parameters_str)
     end
 
-    if deserialize_response
+    if options[:deserialize_response]
       if api_response.status == 200 or api_response.status == 201
 
         return JSON.parse(api_response.body)

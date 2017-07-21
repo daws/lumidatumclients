@@ -89,6 +89,18 @@ class LumidatumClient
     return sendData("transactions", options[:data_string], options[:file_path], model_id)
   end
 
+  def sendFeedbackData(options = {})
+    options = {
+      data_string: nil,
+      file_path: nil,
+      model_id: nil
+    }.merge(options)
+
+    model_id = _getModelIdOrError(options[:model_id])
+
+    return sendData("feedback", options[:data_string], options[:file_path], model_id)
+  end
+
   def sendData(data_type, data_string, file_path, model_id)
     model_id = _getModelIdOrError(model_id)
 
@@ -119,8 +131,9 @@ class LumidatumClient
   end
 
   # File download
-  def getLatestLTVReport(download_file_path, options = {})
+  def getLatestLtvReport(download_file_path, options = {})
     options = {
+      sub_type: nil,
       model_id: nil,
       zipped: true,
       stream_download: true
@@ -128,7 +141,7 @@ class LumidatumClient
 
     model_id = _getModelIdOrError(options[:model_id])
 
-    latest_key_name = getAvailableReports("LTV", model_id, zipped: options[:zipped])
+    latest_key_name = getAvailableReports("LTV", options[:sub_type], model_id, zipped: options[:zipped])
 
     presigned_response_object = getPresignedResponse(latest_key_name, model_id, is_download: true)
 
@@ -142,6 +155,7 @@ class LumidatumClient
 
   def getLatestSegmentationReport(download_file_path, options = {})
     options = {
+      sub_type: nil,
       model_id: nil,
       zipped: true,
       stream_download: true
@@ -149,7 +163,7 @@ class LumidatumClient
 
     model_id = _getModelIdOrError(options[:model_id])
 
-    latest_key_name = getAvailableReports("SEG", model_id, zipped: options[:zipped])
+    latest_key_name = getAvailableReports("SEG", options[:sub_type], model_id, zipped: options[:zipped])
     presigned_response_object = getPresignedResponse(latest_key_name, model_id, is_download: true)
 
     report_response = @http_client.get(presigned_response_object["url"])
@@ -160,13 +174,15 @@ class LumidatumClient
     return report_response
   end
 
-  def getAvailableReports(report_type, model_id, options = {})
+  def getAvailableReports(report_type, sub_type, model_id, options = {})
     options = {
       zipped: true,
       latest: true
     }.merge(options)
 
-    url_query_parameters = {:model_id => model_id, :report_type => report_type, :zipped => options[:zipped], :latest => true}
+    url_query_parameters = {:model_id => model_id, :report_type => report_type, :zipped => options[:zipped], :latest => options[:latest]}
+    url_query_parameters[:sub_type] = sub_type if sub_type
+
     list_reports_response = api("GET", "api/data", url_query_parameters, model_id, deserialize_response: false)
     list_reports_response_object = JSON.parse(list_reports_response.body)
 
